@@ -24,7 +24,15 @@ const Home: NextPage = () => {
   if(!customer)
     return (
       <>
-        Loading...
+        <div className="flex justify-center items-center h-screen">
+            <div className="w-full max-w-xs">
+                <div className="text-center">
+                    <div className="text-gray-700 text-xl font-bold">
+                        Loading..
+                    </div>
+                </div>
+            </div>
+        </div>
       </>
     )
 
@@ -37,22 +45,6 @@ const Home: NextPage = () => {
           <div className="text-center">
             <div className="text-gray-700 text-xl font-bold">
               Welcome {customer.personal.first_name} {customer.personal.last_name}
-            </div>
-          </div>
-          {/* Links to various of paths, invoices, orders  */}
-          <div className="flex flex-col items-center">
-            <h1 className='text-xl text-blue-700'>Check out yours</h1>
-            <div className='flex flex-wrap'>
-              <div className="text-center m-5">
-                <a className="text-green-700 text-xl font-bold">
-                  Orders
-                </a>
-              </div>
-              <div className="text-center m-5">
-                <a className="text-green-700 text-xl font-bold">
-                  Invoices
-                </a>
-              </div>
             </div>
           </div>
         </div>
