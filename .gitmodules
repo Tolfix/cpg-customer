@@ -1,0 +1,3 @@
+[submodule "cpg-api"]
+	path = cpg-api
+	url = https://github.com/Tolfix/cpg-api
