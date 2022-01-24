@@ -22,16 +22,12 @@ export default () =>
 
     return (
         <>
-
             <div>
-                {/* Widht height screen */}
                 <div className="flex flex-col justify-center items-center h-screen w-screen">
                     <div className="max-w-xs">
                         <div className="text-center">
                             <div className="text-gray-700 text-xl font-bold">
                                 <form onSubmit={login}>
-                                    {/* username and password */}
-
                                     <div className="mb-4">
                                         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
                                             Email
@@ -56,9 +52,8 @@ export default () =>
                             </div>
                         </div>
                     </div>
-                </div>         
-            </div>        
-        
+                </div>
+            </div>
         </>
     )
 };

@@ -13,7 +13,7 @@ export default ({
 
     return (
         <>
-        
+
             {/* tailwind card */}
             <div key={invoice.id} className={`
                 bg-white shadow-lg rounded-lg overflow-hidden m-3
