@@ -13,15 +13,21 @@ export default (
     if(!invoices)
         return (
             <>
-                <div>
-                    Loading..
+                <div className="flex justify-center items-center h-screen">
+                    <div className="w-full max-w-xs">
+                        <div className="text-center">
+                            <div className="text-gray-700 text-xl font-bold">
+                                Loading..
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </>
         )
 
     return (
         <>
-            <div className="flex flex-wrap">
+            <div className="flex flex-wrap justify-center">
                 {invoices.map((invoice: any) =>
                 {
                     return <InvoiceCard invoice={invoice} />
