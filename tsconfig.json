@@ -13,8 +13,14 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
+    "paths": {
+      "@cpg/*": [
+        "./cpg-api/src/*"
+      ],
+    },
     "incremental": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "cpg-api/src/Interfaces"],
   "exclude": ["node_modules"]
 }
