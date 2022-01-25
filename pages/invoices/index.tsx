@@ -1,6 +1,6 @@
 import { IInvoice } from "@cpg/Interfaces/Invoice.interface";
 import { getSession } from "next-auth/react";
-import InvoiceCard from "../../components/Invoices/Invoice.card";
+import InvoicesTable from "../../components/Invoices/Invoices.table";
 
 export default (
     {
@@ -28,10 +28,7 @@ export default (
     return (
         <>
             <div className="flex flex-wrap justify-center">
-                {invoices.map((invoice: any) =>
-                {
-                    return <InvoiceCard invoice={invoice} />
-                })}
+                <InvoicesTable invoice={invoices} />
             </div>
 
         </>
