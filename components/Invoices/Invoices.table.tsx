@@ -54,7 +54,9 @@ const InvoiceData = ({ invoice }: { invoice: IInvoice }) =>
                 text-gray-700
                 ${!invoice.paid ? invoice.notified ? `bg-yellow-200` : `bg-red-200` : `bg-green-200`}
                 transition duration-300 ease-in-out
+                hover:font-bold
                 hover:scale-105
+                hover:bg-blue-200
             `}>
                 <td className='px-6 py-4 whitespace-nowrap'>
                     #{invoice.id}
@@ -113,12 +115,12 @@ const InvocieTable = ({
                         <table className='table-auto'>
                             <thead className='bg-gray-50'>
                                 <tr>
-                                    <th className='px-6 py-3 text-left'>
+                                    <th className={`
+                                        px-6 py-3 text-left
+                                        ${isSelected('id') === "ascending" ? `bg-gray-200` : ``}
+                                    `}>
                                         <button
                                             type="button"
-                                            className={`
-                                                ${isSelected('id') === "ascending" ? `bg-gray-200` : ``}
-                                            `}
                                             onClick={() => requestSort('id')}
                                         >
                                             Id
@@ -131,67 +133,68 @@ const InvocieTable = ({
                                             OCR
                                         </button>
                                     </th>
-                                    <th className='px-6 py-3 text-left'>
+                                    <th className={`
+                                        px-6 py-3 text-left
+                                        ${isSelected('amount') === "ascending" ? `bg-gray-200` : ``}
+                                    `}>
                                         <button
                                             type="button"
-                                            className={`
-                                                ${isSelected('amount') === "ascending" ? `bg-gray-200` : ``}
-                                            `}
                                             onClick={() => requestSort('amount')}
                                         >
                                             Amount
                                         </button>
                                     </th>
-                                    <th className="px-6 py-3 text-left">
+                                    <th className={`
+                                        px-6 py-3 text-left
+                                        ${isSelected('tax_rate') === "ascending" ? `bg-gray-200` : ``}
+                                    `}>
                                         <button
                                             type="button"
-                                            className={`
-                                                ${isSelected('tax_rate') === "ascending" ? `bg-gray-200` : ``}
-                                            `}
                                             onClick={() => requestSort('tax_rate')}
                                         >
                                             Tax Rate
                                         </button>
                                     </th>
-                                    <th className="px-6 py-3 text-left">
+                                    <th className={`
+                                        px-6 py-3 text-left
+                                        ${isSelected('dates.due_date') === "ascending" ? `bg-gray-200` : ``}
+                                    `}>
                                         <button
                                             type="button"
-                                            className={`
-                                                ${isSelected('dates.due_date') === "ascending" ? `bg-gray-200` : ``}
-                                            `}
                                             onClick={() => requestSort('dates.due_date')}
                                         >
                                             Due Date
                                         </button>
                                     </th>
-                                    <th className="px-6 py-3 text-left">
+                                    <th className={`
+                                        px-6 py-3 text-left
+                                        ${isSelected('dates.invoice_date') === "ascending" ? `bg-gray-200` : ``}
+                                    `}>
                                         <button
                                             type="button"
-                                            className={`
-                                                ${isSelected('dates.invoice_date') === "ascending" ? `bg-gray-200` : ``}
-                                            `}
                                             onClick={() => requestSort('dates.invoice_date')}
                                         >
                                             Invoice Date
                                         </button>
                                     </th>
-                                    <th className="px-6 py-3 text-left">
+                                    <th className={`
+                                        px-6 py-3 text-left
+                                        ${isSelected('notified') === "ascending" ? `bg-gray-200` : ``}
+                                    `}>
                                         <button
                                             type="button"
-                                            className={`
-                                                ${isSelected('notified') === "ascending" ? `bg-gray-200` : ``}
-                                            `}
                                             onClick={() => requestSort('notified')}
                                         >
                                             Notified
                                         </button>
                                     </th>
-                                    <th className="px-6 py-3 text-left">
+                                    <th className={`
+                                        px-6 py-3 text-left
+                                        ${isSelected('paid') === "ascending" ? `bg-gray-200` : ``}
+                                        `}>
                                         <button
                                             type="button"
-                                            className={`
-                                                ${isSelected('paid') === "ascending" ? `bg-gray-200` : ``}
-                                            `}
+                                            
                                             onClick={() => requestSort('paid')}
                                         >
                                             Paid
@@ -202,7 +205,7 @@ const InvocieTable = ({
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody className='bg-white divide-y divide-gray-200'>
+                            <tbody className=''>
                                 {items.map((invoice) => (
                                     <InvoiceData key={invoice.id} invoice={invoice} />
                                 ))}
