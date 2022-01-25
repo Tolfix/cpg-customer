@@ -3,6 +3,9 @@ import CredentialsProvider from "next-auth/providers/credentials"
 
 export default NextAuth({
     secret: process.env.SECRET,
+    session: {
+      maxAge: 60 * 60 * 24, // 1 day
+    },
     providers: [
         CredentialsProvider({
             name: 'CPG Customer Login',
