@@ -7,7 +7,6 @@ export const Layout: NextComponentType = ({ children }) => {
     const { status, data } = useSession();
     
     if(status === "loading")
-    {
         return (
             <>
                 {/* Tailwind center middle */}
@@ -22,12 +21,9 @@ export const Layout: NextComponentType = ({ children }) => {
                 </div>
             </>
         )
-    }
 
     if(!data)
-    {
         return <Login />;
-    }
 
     return (
         <>
