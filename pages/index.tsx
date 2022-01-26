@@ -1,28 +1,34 @@
-import { ICustomer } from '@cpg/Interfaces/Customer.interface';
-import type { NextPage } from 'next'
-import { useSession } from 'next-auth/react';
-import { useEffect, useState } from 'react';
+import {ICustomer} from '@cpg/Interfaces/Customer.interface';
+import type {NextPage} from 'next'
+import {useSession} from 'next-auth/react';
+import {useEffect, useState} from 'react';
 import Loading from "../components/Loading";
 
-const Home: NextPage = () => {
+const Home: NextPage = () =>
+{
     const session = useSession();
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    let token = session.data?.user.email
+    const token = session.data?.user.email
     const [customer, setCustomer] = useState<ICustomer | null>(null);
 
-    useEffect(() => {
-        fetch(`${process.env.NEXT_PUBLIC_CPG_DOMAIN}/v2/customers/my/profile`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            }
-        }).then(res => res.json()).then(data => {
+    useEffect(() =>
+    {
+        fetch(`${process.env.NEXT_PUBLIC_CPG_DOMAIN}/v2/customers/my/profile`,
+            {
+                method: 'GET',
+                headers:
+                    {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    }
+            }).then(res => res.json()).then(data =>
+        {
             setCustomer(data);
         });
     }, []);
 
-    if(!customer)
+    if (!customer)
         return (
             <>
                 <Loading/>
@@ -46,4 +52,4 @@ const Home: NextPage = () => {
     );
 }
 
-export default Home
+export default Home;
