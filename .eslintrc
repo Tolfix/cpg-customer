@@ -2,14 +2,11 @@
     "root": true,
     "parser": "@typescript-eslint/parser",
     "plugins": [
-        "@typescript-eslint",
-        "react",
-        "react-hooks"
+        "@typescript-eslint"
     ],
     "extends": [
         "eslint:recommended",
-        "plugin:@typescript-eslint/recommended",
-        "plugin:@typescript-eslint/eslint-reccomended"
+        "plugin:@typescript-eslint/recommended"
     ],
     "rules": {
         "brace-style": [
