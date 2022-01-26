@@ -1,6 +1,7 @@
 import { IInvoice } from "@cpg/Interfaces/Invoice.interface";
 import { getSession } from "next-auth/react";
 import InvoicesTable from "../../components/Invoices/Invoices.table";
+import Loading from "../../components/Loading";
 
 export default (
     {
@@ -12,17 +13,7 @@ export default (
 {
     if(!invoices)
         return (
-            <>
-                <div className="flex justify-center items-center h-screen">
-                    <div className="w-full max-w-xs">
-                        <div className="text-center">
-                            <div className="text-gray-700 text-xl font-bold">
-                                Loading..
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </>
+            <Loading/>
         )
 
     return (
