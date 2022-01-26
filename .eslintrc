@@ -1,0 +1,12 @@
+{
+    "root": true,
+    "rules": {
+        "brace-style": [
+            "error",
+            "allman",
+            {
+                "allowSingleLine": true
+            }
+        ]
+    }
+}
