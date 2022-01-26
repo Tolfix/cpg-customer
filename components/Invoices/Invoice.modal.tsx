@@ -10,7 +10,8 @@ const popupCenter = ({url, title, w, h}: {
     title: string,
     w: number,
     h: number
-}) => {
+}) =>
+{
     // Fixes dual-screen position                             Most browsers      Firefox
     const dualScreenLeft = window.screenLeft !==  undefined ? window.screenLeft : window.screenX;
     const dualScreenTop = window.screenTop !==  undefined   ? window.screenTop  : window.screenY;
@@ -42,8 +43,6 @@ export default ({
     setShow: (show: boolean) => void
 }) =>
 {
-
-
     return (
         <>
             <Modal

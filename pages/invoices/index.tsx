@@ -33,7 +33,8 @@ export async function getServerSideProps(context)
     // @ts-ignore
     let token = session?.user.email
 
-    const invoices = await fetch(`${process.env.NEXT_PUBLIC_CPG_DOMAIN}/v2/customers/my/invoices`, {
+    const invoices = await fetch(`${process.env.NEXT_PUBLIC_CPG_DOMAIN}/v2/customers/my/invoices`,
+    {
         method: "GET",
         headers: {
             "Content-Type": "application/json",

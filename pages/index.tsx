@@ -3,15 +3,19 @@ import { useSession } from 'next-auth/react';
 import {Component, useEffect, useState} from 'react';
 import Loading from "../components/Loading";
 
-class Home extends Component {
-    render() {
+class Home extends Component
+{
+    render()
+    {
         const session = useSession();
         // @ts-ignore
         let token = session.data?.user.email
         const [customer, setCustomer] = useState<ICustomer | null>(null);
 
-        useEffect(() => {
-            fetch(`${process.env.NEXT_PUBLIC_CPG_DOMAIN}/v2/customers/my/profile`, {
+        useEffect(() =>
+        {
+            fetch(`${process.env.NEXT_PUBLIC_CPG_DOMAIN}/v2/customers/my/profile`,
+            {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -47,4 +51,4 @@ class Home extends Component {
     }
 }
 
-export default Home
+export default Home;

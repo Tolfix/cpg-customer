@@ -8,14 +8,17 @@ export const Modal = (
         children: React.ReactNode;
         title: string;
     }
-) => {
+) =>
+{
     const [isBrowser, setIsBrowser] = useState(false);
   
-    useEffect(() => {
+    useEffect(() =>
+    {
         setIsBrowser(true);
     }, []);
 
-    const handleCloseClick = (e: { preventDefault: () => void; }) => {
+    const handleCloseClick = (e: { preventDefault: () => void; }) =>
+    {
         e.preventDefault();
         onClose();
     };

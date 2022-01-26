@@ -14,7 +14,8 @@ export default NextAuth({
               password: {  label: "Password", type: "password" }
             },
             async authorize(credentials, req) {
-              const res = await fetch(`${process.env.CPG_DOMAIN}/v2/customers/authenticate`, {
+              const res = await fetch(`${process.env.CPG_DOMAIN}/v2/customers/authenticate`,
+              {
                 method: 'POST',
                 body: JSON.stringify(credentials),
                 headers: { 
@@ -24,7 +25,8 @@ export default NextAuth({
 
               const user = await res.json();
 
-              if (res.ok && user) {
+              if(res.ok && user)
+              {
                 return {
                   email: user.token
                 }
