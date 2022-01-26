@@ -27,7 +27,6 @@ export const Modal = (
         <>
             {/* Tailwind modal */}
             <div className="fixed inset-0 z-50 overflow-hidden">
-                <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
                 <div className="absolute inset-0 flex flex-col justify-center items-center">
                     <div className="bg-white rounded-lg shadow-xl p-6 max-w-sm">
                         <div className="flex justify-between items-center pb-3">
