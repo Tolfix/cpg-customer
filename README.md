@@ -4,8 +4,6 @@
   cpg-customer
 </p>
 
-
-
 # ⭐ | cpg-customer
 cpg-customer for cpg-api.
 
