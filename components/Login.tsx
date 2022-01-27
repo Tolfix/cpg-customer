@@ -1,6 +1,5 @@
-import { getProviders, signIn } from "next-auth/react";
-import { useRouter } from "next/router";
-import { useCallback, useEffect, useState } from "react";
+import { signIn } from "next-auth/react";
+import { useState } from "react";
 
 export default () =>
 {

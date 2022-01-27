@@ -31,7 +31,7 @@ export async function getServerSideProps(context)
 {
     const session = await getSession(context);
     // @ts-ignore
-    let token = session?.user.email
+    const token = session?.user.email
 
     const invoices = await fetch(`${process.env.NEXT_PUBLIC_CPG_DOMAIN}/v2/customers/my/invoices`,
     {

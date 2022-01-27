@@ -7,14 +7,18 @@ export default ({
     transactions: ITransactions[]
 }) =>
 {
-
+    return (
+        <>
+        
+        </>
+    )
 }
 
 export async function getServerSideProps(context: any)
 {
     const session = await getSession(context);
     // @ts-ignore
-    let token = session?.user.email
+    const token = session?.user.email
 
     const transactions = await fetch(`${process.env.NEXT_PUBLIC_CPG_DOMAIN}/v2/customers/my/transactions`,
     {

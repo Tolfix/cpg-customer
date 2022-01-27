@@ -13,7 +13,8 @@ export default NextAuth({
               username: { label: "Email", type: "email", placeholder: "example@email.com" },
               password: {  label: "Password", type: "password" }
             },
-            async authorize(credentials, req) {
+            async authorize(credentials)
+            {
               const res = await fetch(`${process.env.CPG_DOMAIN}/v2/customers/authenticate`,
               {
                 method: 'POST',
