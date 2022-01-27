@@ -1,5 +1,3 @@
-import Link from "next/link";
-import { useRouter } from 'next/router'
 
 const routes = [
     {
@@ -31,34 +29,50 @@ const routes = [
 
 export default () =>
 {
-    const router = useRouter();
     return (
         <>
-        
-            {/* Navbar */}
-            <div>
-                <div className="flex items-center justify-between flex-wrap bg-green-600 p-6">
-                    <div className="flex items-center flex-shrink-0 text-white mr-6">
-                        {routes.map((route, index) =>
-                        {
-                            return (
-                                <div className="m-3">
-                                    <Link href={route.path} key={index}>
-                                        <a className={`
-                                            text-white text-lg font-semibold 
-                                            hover:text-gray-600
-                                            ${router.pathname === route.path ? `text-gray-600` : `text-white`}
-                                        `}>
-                                            {route.name}
-                                        </a>
-                                    </Link>
-                                </div>
-                            )
-                        })}
+
+            <div className="bg-gray-100 font-sans w-full m-0">
+                <div className="bg-white shadow">
+                    <div className="container mx-auto px-4">
+                        <div className="flex items-center justify-between py-4">
+                            <div>
+                            {/* TODO: Put a svg in here for the logo. */}
+                            </div>
+
+                            <div className="hidden sm:flex sm:items-center">
+                                {routes.map((route) =>
+                                {
+                                    return (
+                                        <a href={route.path}
+                                           className="text-gray-800 text-sm font-semibold hover:text-purple-600 mr-4">{route.name}</a>
+                                    )
+                                })}
+                            </div>
+
+                            <div className="sm:hidden cursor-pointer">
+                            {/* TODO: Put the same svg here*/}
+                            </div>
+                        </div>
+
+                        <div className="block sm:hidden bg-white border-t-2 py-2">
+                            <div className="flex flex-col">
+                                {routes.map((route) =>
+                                {
+                                    return (
+                                        <a href={route.path}
+                                           className="text-gray-800 text-sm font-semibold hover:text-purple-600 mb-1">{route.name}</a>
+                                    )
+                                })}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        
+
+
+
+
         </>
     )
 }
