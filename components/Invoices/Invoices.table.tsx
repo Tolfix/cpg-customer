@@ -79,10 +79,6 @@ const InvoiceData = ({invoice}: { invoice: IInvoice }) =>
             </tr>
 
             <InvoiceModal show={showModal} setShow={setShowModal} invoice={invoice}/>
-
-
-
-
         </>
     )
 }
