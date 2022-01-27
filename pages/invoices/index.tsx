@@ -11,17 +11,18 @@ export default (
     }
 ) =>
 {
-    if(!invoices)
-        return (
-            <Loading/>
-        )
+    // removed this line, 
+    // due to if it is empty or null it will load forever, and user will never know what is happening. 
+    // if(!invoices)
+    //     return (
+    //         <Loading/>
+    //     )
 
     return (
         <>
             <div className="flex flex-wrap justify-center">
                 <InvoicesTable invoice={invoices} />
             </div>
-
         </>
     )
 }
