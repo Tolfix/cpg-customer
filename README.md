@@ -12,6 +12,18 @@ Want to contribute? Great! You can contribute by `forking` this repository, then
 
 Or simple ask on our [`discord server`](https://discord.tolfix.com).
 
+## Testing
+When testing the panel requires four things to function.
+
+In `env.local` the following is required
+```txt
+NEXT_PUBLIC_CPG_DOMAIN=https://cpg.tolfx.dev
+CPG_DOMAIN=https://cpg.tolfx.dev
+SECRET=asecret
+```
+
+And when logging in you use email as `test@tolfix.com` with password `123`
+
 # 🔮 | Discord
 [![Discord](https://discord.com/api/guilds/833438897484595230/widget.png?style=banner4)](https://discord.tolfix.com)
 
