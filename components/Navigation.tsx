@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 
 const routes = [
     {
@@ -29,6 +30,7 @@ const routes = [
 
 export default () =>
 {
+    const router = useRouter();
     return (
         <>
 
@@ -37,7 +39,9 @@ export default () =>
                     <div className="container mx-auto px-4">
                         <div className="flex items-center justify-between py-4">
                             <div>
-                            {/* TODO: Put a svg in here for the logo. */}
+                            {/* TODO: Put a svg in here for the logo.
+                                Issue #5 (https://github.com/Tolfix/cpg-customer/issues/5)
+                            */}
                             </div>
 
                             <div className="hidden sm:flex sm:items-center">
@@ -45,7 +49,11 @@ export default () =>
                                 {
                                     return (
                                         <a href={route.path}
-                                           className="text-gray-800 text-sm font-semibold hover:text-purple-600 mr-4">{route.name}</a>
+                                           className={`
+                                           text-sm font-semibold 
+                                           ${route.path === router.pathname ? 'text-purple-500' : 'text-gray-800'}
+                                           hover:text-purple-600 mr-4
+                                           `}>{route.name}</a>
                                     )
                                 })}
                             </div>
