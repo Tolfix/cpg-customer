@@ -1,4 +1,4 @@
-import {ICustomer} from '@cpg/Interfaces/Customer.interface';
+import { ICustomer } from '@cpg/Interfaces/Customer.interface';
 import type {NextPage} from 'next'
 import {useSession} from 'next-auth/react';
 import {useEffect, useState} from 'react';
