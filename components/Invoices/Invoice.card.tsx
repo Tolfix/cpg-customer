@@ -20,7 +20,6 @@ export default ({
                 relative 
                 border-l-8
                 ${!invoice.paid ? `border-red-400` : `border-green-400`} 
-                
                 `}>
                 <div className="px-6 py-4">
                     {/* Information about our invoice */}
