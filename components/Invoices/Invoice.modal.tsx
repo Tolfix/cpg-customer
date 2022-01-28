@@ -5,7 +5,7 @@ import { Modal } from "../Modal";
  * 
  * @stackoverflow https://stackoverflow.com/questions/4068373/center-a-popup-window-on-screen
  */
-const popupCenter = ({url, title, w, h}: {
+export const popupCenter = ({url, title, w, h}: {
     url: string,
     title: string,
     w: number,
