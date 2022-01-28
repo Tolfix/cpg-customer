@@ -33,8 +33,14 @@ export async function getServerSideProps(context)
     const session = await getSession(context);
     // @ts-ignore
     const token = session?.user.email
+    let query = ``;
 
-    const invoices = await fetch(`${process.env.NEXT_PUBLIC_CPG_DOMAIN}/v2/customers/my/invoices`,
+    if(context.query)
+    {
+        query = `?${Object.keys(context.query).map(key => `${key}=${context.query[key]}`).join("&")}`;
+    }
+
+    const invoices = await fetch(`${process.env.NEXT_PUBLIC_CPG_DOMAIN}/v2/customers/my/invoices${query}`,
     {
         method: "GET",
         headers: {
