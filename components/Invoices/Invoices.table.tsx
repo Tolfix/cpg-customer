@@ -38,9 +38,7 @@ const useSortableData = (items: IInvoice[], config = null) =>
             sortConfig.key === key &&
             sortConfig.direction === 'ascending'
         )
-        {
             direction = 'descending';
-        }
         // @ts-ignore
         setSortConfig({key, direction});
     };
@@ -80,12 +78,12 @@ const InvoiceData = ({invoice}: { invoice: IInvoice }) =>
                 <td className="py-4 px-6 text-sm font-medium text-right whitespace-nowrap">
                     <button onClick={() =>
                     {
-                        popupCenter({
+                        return popupCenter({
                             url: `${process.env.NEXT_PUBLIC_CPG_DOMAIN}/v2/customers/my/invoices/${invoice.id}/preview?access_token=${session?.data?.user?.email}`,
                             title: "Invoice Preview",
                             w: 600,
                             h: 900
-                        })
+                        });
                     }} className='text-indigo-600 hover:text-indigo-900'>
                         Preview
                     </button>
