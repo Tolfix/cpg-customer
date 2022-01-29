@@ -6,7 +6,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "fetch:submodules": "git submodule update --init --recursive"
+    "fetch:submodules": "git submodule update --init --recursive",
+    "fetch:submodules:update": "git submodule update --recursive --remote"
   },
   "dependencies": {
     "jsonwebtoken": "^8.5.1",
