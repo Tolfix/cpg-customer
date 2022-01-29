@@ -78,7 +78,8 @@ const InvoiceData = ({invoice}: { invoice: IInvoice }) =>
                     </button>
                 </td>
                 <td className="py-4 px-6 text-sm font-medium text-right whitespace-nowrap">
-                    <button onClick={() => {
+                    <button onClick={() =>
+                    {
                         popupCenter({
                             url: `${process.env.NEXT_PUBLIC_CPG_DOMAIN}/v2/customers/my/invoices/${invoice.id}/preview?access_token=${session?.data?.user?.email}`,
                             title: "Invoice Preview",
