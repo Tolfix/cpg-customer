@@ -4,14 +4,18 @@ import DynamicTable from "../Tables/DynamicTable";
 
 export default function OrderTable<T extends Array<IOrder>>({
     orders,
-    rowData
+    rowData,
+    count,
+    pages
 }: {
     orders: T,
     // ! fix later !
     rowData: IRowData<any>[],
+    count: number,
+    pages: number,
 })
 {
     return (
-        <DynamicTable path="/orders" data={orders} rowData={rowData} />
+        <DynamicTable count={count} pages={pages} path="/orders" data={orders} rowData={rowData} />
     )
 }

@@ -1,21 +1,46 @@
+import { useRouter } from "next/router";
 import { IRowData } from "../../interfaces/RowData";
+import Loading from "../Loading";
 import useSortableData from "./Sortable";
 
 export default function DynamicTable<T>(
     {
         data,
         rowData,
-        path
+        path,
+        count,
+        pages,
     }: {
         data: Array<T>,
         // ! fix later !
         rowData: IRowData<any>[],
-        path: string
+        path: string,
+        count: number,
+        pages: number,
     }
 )
 {
 
+    if(!data)
+        return (
+            <>
+                <Loading />
+            </>
+        )
+
+    const router = useRouter();
+    const skip = parseInt(router.query.skip as string) || 0;
+    const limit = parseInt(router.query.limit as string) || 10;
+    const currentPage = Math.floor(skip / limit) + 1;
+
+    const changeNewPage = (newPage: number) =>
+        window.location.href = `${path}?skip=${(newPage - 1) * limit}&limit=${limit}`;
+
+    const changeNewLimit = (newLimit: number) =>
+        window.location.href = `${path}?skip=${skip}&limit=${newLimit}`;
+    
     const { items, requestSort, sortConfig } = useSortableData(data);
+
     const isSelected = (name: string) =>
     {
         if (!sortConfig)
@@ -111,6 +136,68 @@ export default function DynamicTable<T>(
                                 ))}
                             </tbody>
                         </table>
+                    </div>
+                    <div>
+                        {/* Pagination */}
+                        <div className="">
+                            {/* Pick limit selection */}
+                            <div>
+                                <select onChange={(event) =>
+                                {
+                                    changeNewLimit(parseInt(event.target.value));
+                                }} className="rounded" name="limit" id="limit">
+                                    {[10, 25, 50, 100].map((limit) =>
+                                        // Check if limit is selected
+                                        <option key={limit} value={limit} className='uppercase' selected={limit === parseInt(router.query.limit as string)}>{limit}</option>
+                                    )}
+                                </select>
+                            </div>
+                            <div className="flex justify-center items-center mt-2">
+                                <div className="text-sm leading-5 text-gray-500">
+                                    {/* Click to back page */}
+                                    {skip !== 0 && (
+                                        <>
+                                            <button
+                                                className="mr-2 inline-flex items-center px-2.5 py-1.5 border border-gray-300 dark:border-gray-
+                                                600 rounded-lg text-sm leading-5 font-medium text-gray-700 hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:bg-gray-50 active:text-gray-800 transition ease-in-out duration-150"
+                                                onClick={() => changeNewPage(currentPage - 1)}
+                                            >
+                                                Back                          
+                                            </button>  
+                                        </>
+                                    )}
+                                     
+                                    <span>
+                                        Showing
+                                        <span className="px-1 text-xs font-medium leading-4 bg-gray-100 dark:bg-gray-800 rounded-full">
+                                            {skip + 1}
+                                        </span>
+                                        to
+                                        <span className="px-1 text-xs font-medium leading-4 bg-gray-100 dark:bg-gray-800 rounded-full">
+                                            {skip + items.length}
+                                        </span>
+                                        of
+                                        <span className="px-1 text-xs font-medium leading-4 bg-gray-100 dark:bg-gray-800 rounded-full">
+                                            {count}
+                                        </span>
+                                    </span>
+                                    {/* Click to next page */}
+                                    {/* Check if we can go any further */}
+                                    {(skip + limit) < count && (
+                                        <>
+                                            <button
+                                                className="ml-2 inline-flex items-center px-2.5 py-1.5 border border-gray-300 dark:border-gray-
+                                                600 rounded-lg text-sm leading-5 font-medium text-gray-700 hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:bg-gray-50 active:text-gray-800 transition ease-in-out duration-150
+                                                "
+                                                onClick={() => changeNewPage(currentPage + 1)}
+                                            >
+                                                Next                                            
+                                            </button>
+                                        </>
+                                    )}                                       
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

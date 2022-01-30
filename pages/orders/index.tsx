@@ -1,16 +1,29 @@
 import { IOrder } from "@cpg/Interfaces/Orders.interface"
-import { getSession, useSession } from "next-auth/react";
+import { getSession } from "next-auth/react";
+import { useState } from "react";
+import { Modal } from "../../components/Modal";
 import OrderTable from "../../components/Orders/Order.table";
 import { IRowData } from "../../interfaces/RowData";
 
+export function CancelOrder(orderId: IOrder["id"])
+{
+
+}
+
 export default (
     {
-        orders
+        orders,
+        count,
+        pages
     }: {
-        orders: IOrder[]
+        orders: IOrder[],
+        count: number,
+        pages: number,
     }
 ) =>
 {
+    const [openModal, setOpenModal] = useState(false);
+    const [currentModalClicked, setCurrentModalClicked] = useState<null | IOrder["id"]>(null);
 
     const rowDataOrder: IRowData<IOrder>[] = [
         {
@@ -23,7 +36,7 @@ export default (
             },
             printedPreview: (order: IOrder) =>
             {
-                return `${order.id}`
+                return `${order.id}`;
             }
         },
         {
@@ -36,10 +49,10 @@ export default (
             },
             printedPreview: (order: IOrder) =>
             {
-                let date = (order.dates.createdAt).toString()
+                let date = (order.dates.createdAt).toString();
                 if(!date)
-                    date = "N/A"
-                return `${date}`
+                    date = "N/A";
+                return `${date}`;
             }
         },
         {
@@ -52,7 +65,7 @@ export default (
             },
             printedPreview: (order: IOrder) =>
             {
-                return `${order.order_status}`
+                return `${order.order_status}`;
             }
         },
         {
@@ -69,7 +82,11 @@ export default (
                 return (
                     <>
                     
-                        <button id={`cancel-button-${order.id}`} className="text-indigo-600 hover:text-indigo-900">
+                        <button onClick={() => 
+                            {
+                                setCurrentModalClicked(order.id);
+                                setOpenModal(true);
+                            }} id={`cancel-button-${order.id}`} className="text-indigo-600 hover:text-indigo-900">
                             Cancel
                         </button>
 
@@ -82,7 +99,31 @@ export default (
     return (
         <>
             <div className="flex flex-wrap justify-center">
-                <OrderTable orders={orders} rowData={rowDataOrder} />
+                <OrderTable count={count} pages={pages} orders={orders} rowData={rowDataOrder} />
+                <Modal
+                    onClose={() => setOpenModal(false)}
+                    show={openModal}
+                    title={`Cancel Order ${currentModalClicked}`}
+                >
+                    <p>Are you sure you want to cancel this order?</p>
+                    <div className="flex flex-wrap">
+                        <button
+                            onClick={() => setOpenModal(false)}
+                            className="px-5 m-2 rounded bg-red-400 hover:bg-red-600"
+                        >
+                            No
+                        </button>
+                        <button
+                            onClick={() => 
+                            {
+                                console.log(this);
+                            }}
+                            className="px-5 m-2 rounded bg-green-400 hover:bg-green-600"
+                        >
+                            Yes
+                        </button>
+                    </div>
+                </Modal>
             </div>
         </>
     )
@@ -93,19 +134,31 @@ export async function getServerSideProps(context: any)
     const session = await getSession(context);
     // @ts-ignore
     const token = session?.user.email
-
-    const orders = await fetch(`${process.env.NEXT_PUBLIC_CPG_DOMAIN}/v2/customers/my/orders`,
+    let query = ``;
+    
+    if(context.query)
+    {
+        query = `?${Object.keys(context.query).map(key => `${key}=${context.query[key]}`).join("&")}`;
+    }
+    let count, pages;
+    const orders = await fetch(`${process.env.NEXT_PUBLIC_CPG_DOMAIN}/v2/customers/my/orders${query}`,
     {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${token}`
         }
-    }).then(res => res.json());
+    }).then(res => {
+        count = res.headers.get("X-Total");
+        pages = res.headers.get("X-Total-Pages");
+        return res.json();
+    });
 
     return {
         props: {
-            orders
+            orders,
+            count,
+            pages,
         }
     }
 }
