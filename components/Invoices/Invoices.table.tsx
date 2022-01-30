@@ -39,8 +39,8 @@ const InvoiceData = ({invoice}: { invoice: IInvoice }) =>
                         return popupCenter({
                             url: `${process.env.NEXT_PUBLIC_CPG_DOMAIN}/v2/customers/my/invoices/${invoice.id}/preview?access_token=${session?.data?.user?.email}`,
                             title: "Invoice Preview",
-                            w: 600,
-                            h: 900
+                            w: 1200,
+                            h: 1000
                         });
                     }} className='text-indigo-600 hover:text-indigo-900'>
                         Preview
