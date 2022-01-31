@@ -94,7 +94,7 @@ const Home: NextPage = ({
                             },
                             {
                                 label: "Orders",
-                                data: [1],
+                                data: [orders.length],
                                 backgroundColor: [
                                     '#A855F7',
                                 ],
@@ -104,7 +104,7 @@ const Home: NextPage = ({
                             },
                             {
                                 label: "Transactions",
-                                data: [5],
+                                data: [transactions.length],
                                 backgroundColor: [
                                     '#36A2EB',
                                 ],
@@ -126,6 +126,10 @@ export async function getServerSideProps(context: any)
     const session = await getSession(context);
     // @ts-ignore
     const token = session?.user.email
+    if(!token)
+        return {
+            props: {}
+        };
 
     const [invoices, orders, transactions] = [
         await fetch(`${process.env.NEXT_PUBLIC_CPG_DOMAIN}/v2/customers/my/invoices&limit=100`,
