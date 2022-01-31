@@ -9,14 +9,14 @@ export default function DynamicTable<T>(
         rowData,
         path,
         count,
-        pages,
+        // pages,
     }: {
         data: Array<T>,
         // ! fix later !
         rowData: IRowData<any>[],
         path: string,
         count: number,
-        pages: number,
+        // pages: number,
     }
 )
 {
