@@ -1,6 +1,7 @@
 import { IInvoice } from "@cpg/Interfaces/Invoice.interface";
 import { getSession, useSession } from "next-auth/react";
-import { popupCenter } from "../../components/Invoices/Invoice.modal";
+import { useState } from "react";
+import InvoiceModal, { popupCenter } from "../../components/Invoices/Invoice.modal";
 import DynamicTable from "../../components/Tables/DynamicTable";
 import { IRowData } from "../../interfaces/RowData";
 
@@ -18,6 +19,10 @@ export default (
 {
     const cpg_domain = process.env.NEXT_PUBLIC_CPG_DOMAIN;
     const session = useSession();
+
+    const [currentInvoice, setCurrentInvoice] = useState<IInvoice>();
+    const [showModal, setShowModal] = useState(false);
+
     const rowData: IRowData<IInvoice>[] = [
         {
             id: "id",
@@ -101,7 +106,11 @@ export default (
                 return (
                     <>
                         <td className="text-sm font-medium text-right whitespace-nowrap">
-                            <button onClick={() => true} className='text-indigo-600 hover:text-indigo-900'>
+                            <button onClick={() =>
+                            {
+                                setCurrentInvoice(invoice);
+                                setShowModal(true);
+                            }} className='text-indigo-600 hover:text-indigo-900'>
                                 View
                             </button>
                         </td>
@@ -146,6 +155,12 @@ export default (
             <div className="flex flex-wrap justify-center">
                 {/* <InvoicesTable invoice={invoices} /> */}
                 <DynamicTable count={count} pages={pages} path="/invoices" data={invoices} rowData={rowData} />
+
+                <InvoiceModal
+                    invoice={currentInvoice ?? invoices[0]}
+                    setShow={setShowModal}
+                    show={showModal}
+                />
             </div>
         </>
     )
@@ -172,7 +187,8 @@ export async function getServerSideProps(context)
             "Content-Type": "application/json",
             "Authorization": `Bearer ${token}`
         }
-    }).then(res => {
+    }).then(res =>
+    {
         count = res.headers.get("X-Total");
         pages = res.headers.get("X-Total-Pages");
         return res.json();
