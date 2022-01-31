@@ -41,4 +41,4 @@ export default function useSortableData<T>(items: T[], config = null)
     };
 
     return {items: sortedItems, requestSort, sortConfig};
-};
+}
