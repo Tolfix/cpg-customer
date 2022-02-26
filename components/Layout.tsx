@@ -1,12 +1,20 @@
 import { NextComponentType } from "next"
 import { useSession } from "next-auth/react"
+import { useRouter } from "next/router";
+import ForgottenPassword from "./ForgottenPassword";
 import Login from "./Login"
 import Navigation from "./Navigation";
 
 export const Layout: NextComponentType = ({ children }) =>
 {
     const { status, data } = useSession();
-    
+    const router = useRouter();
+
+    console.log(router.pathname, status);
+
+    if(router.pathname === "/forgotton-password" && status === "unauthenticated")
+        return <ForgottenPassword />
+
     if(status === "loading")
         return (
             <>

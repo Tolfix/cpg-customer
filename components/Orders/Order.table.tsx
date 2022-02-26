@@ -10,7 +10,8 @@ export default function OrderTable<T extends Array<IOrder>>({
 }: {
     orders: T,
     // ! fix later !
-    rowData: IRowData<unknown>[],
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    rowData: IRowData<any>[],
     count: number,
     pages: number,
 })

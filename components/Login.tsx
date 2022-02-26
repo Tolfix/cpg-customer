@@ -43,9 +43,12 @@ export default () =>
 
                                     {/* Submit button */}
                                     <div className="flex items-center justify-between">
-                                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
-                                        Login
-                                    </button>
+                                        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+                                            Login
+                                        </button>
+                                        <a href="/forgotton-password" className="text-sm font-mono text-blue-300 hover:text-blue-400">
+                                            Forgotten password?
+                                        </a>
                                     </div>
                                 </form>
                             </div>
