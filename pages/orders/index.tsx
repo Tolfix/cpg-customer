@@ -4,6 +4,9 @@ import { useState } from "react";
 import { Modal } from "../../components/Modal";
 import OrderTable from "../../components/Orders/Order.table";
 import { IRowData } from "../../interfaces/RowData";
+import getConfig from 'next/config'
+const { publicRuntimeConfig: config } = getConfig()
+
 
 export async function CancelOrder(orderId: IOrder["id"])
 {
@@ -13,7 +16,7 @@ export async function CancelOrder(orderId: IOrder["id"])
     if(!token)
         return Promise.resolve(false);
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_CPG_DOMAIN}/v2/customers/my/orders/${orderId}/cancel`,
+    const res = await fetch(`${config.CPG_DOMAIN}/v2/customers/my/orders/${orderId}/cancel`,
     {
         method: 'POST',
         headers:
@@ -167,7 +170,7 @@ export async function getServerSideProps(context: any)
         query = `?${Object.keys(context.query).map(key => `${key}=${context.query[key]}`).join("&")}`;
     }
     let count, pages;
-    const orders = await fetch(`${process.env.NEXT_PUBLIC_CPG_DOMAIN}/v2/customers/my/orders${query}`,
+    const orders = await fetch(`${config.CPG_DOMAIN}/v2/customers/my/orders${query}`,
     {
         method: "GET",
         headers: {

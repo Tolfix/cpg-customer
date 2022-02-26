@@ -4,6 +4,9 @@ import { useSession } from 'next-auth/react';
 import React, {useState} from 'react';
 import useSortableData from '../Tables/Sortable';
 import InvoiceModal, { popupCenter } from './Invoice.modal';
+import getConfig from 'next/config'
+const { publicRuntimeConfig: config } = getConfig()
+
 
 const InvoiceData = ({invoice}: { invoice: IInvoice }) =>
 {
@@ -38,7 +41,7 @@ const InvoiceData = ({invoice}: { invoice: IInvoice }) =>
                     <button onClick={() =>
                     {
                         return popupCenter({
-                            url: `${process.env.NEXT_PUBLIC_CPG_DOMAIN}/v2/customers/my/invoices/${invoice.id}/preview?access_token=${session?.data?.user?.email}`,
+                            url: `${config.CPG_DOMAIN}/v2/customers/my/invoices/${invoice.id}/preview?access_token=${session?.data?.user?.email}`,
                             title: "Invoice Preview",
                             w: 1200,
                             h: 1000

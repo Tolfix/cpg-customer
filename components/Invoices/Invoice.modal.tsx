@@ -1,5 +1,7 @@
 import { IInvoice } from "@cpg/Interfaces/Invoice.interface";
 import { Modal } from "../Modal";
+import getConfig from 'next/config'
+const { publicRuntimeConfig: config } = getConfig()
 
 /**
  * 
@@ -110,7 +112,7 @@ export default ({
                             <div className="flex flex-wrap justify-center">
                                 <button
                                     onClick={() => popupCenter({
-                                        url: `${process.env.NEXT_PUBLIC_CPG_DOMAIN}/v2/${
+                                        url: `${config.CPG_DOMAIN}/v2/${
                                             invoice.payment_method === "paypal" ? "paypal" : "stripe"
                                         }/pay/${invoice.uid}`,
                                         title: "Pay",

@@ -1,5 +1,7 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials"
+import getConfig from 'next/config'
+const { publicRuntimeConfig: config } = getConfig()
 
 export default NextAuth({
     secret: process.env.SECRET,
@@ -15,7 +17,7 @@ export default NextAuth({
             },
             async authorize(credentials)
             {
-              const res = await fetch(`${process.env.CPG_DOMAIN}/v2/customers/authenticate`,
+              const res = await fetch(`${config.CPG_DOMAIN}/v2/customers/authenticate`,
               {
                 method: 'POST',
                 body: JSON.stringify(credentials),

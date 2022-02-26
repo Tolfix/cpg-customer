@@ -1,4 +1,6 @@
 import { useState } from "react";
+import getConfig from 'next/config'
+const { publicRuntimeConfig: config } = getConfig()
 
 export default () =>
 {
@@ -10,7 +12,7 @@ export default () =>
         e.preventDefault();
         const form = e.target;
         const email = form.email.value;
-        const res = await fetch(`${process.env.NEXT_PUBLIC_CPG_DOMAIN}/v2/customers/my/reset-password`, {
+        const res = await fetch(`${config.CPG_DOMAIN}/v2/customers/my/reset-password`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
