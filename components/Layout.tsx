@@ -8,7 +8,6 @@ import Navigation from "./Navigation";
 export const Layout: NextComponentType = ({ children }) =>
 {
     const { status, data } = useSession();
-
     const router = useRouter();
 
     console.log(router.pathname, status);
