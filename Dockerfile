@@ -11,7 +11,8 @@ RUN npm install --save-dev typescript @types/react @types/node
 
 COPY . .
 
-RUN NEXT_PUBLIC_CPG_DOMAIN=APP_NEXT_PUBLIC_CPG_DOMAIN npm run build
+RUN NEXT_PUBLIC_CPG_DOMAIN=APP_NEXT_PUBLIC_CPG_DOMAIN
+RUN npm run build
 
 ENTRYPOINT ["/app/entrypoint.sh"]
 
