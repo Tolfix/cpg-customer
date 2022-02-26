@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useRouter } from "next/router";
 import { IRowData } from "../../interfaces/RowData";
 import Loading from "../Loading";
@@ -9,11 +10,12 @@ export default function DynamicTable<T>(
         rowData,
         path,
         count,
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         pages,
     }: {
         data: Array<T>,
         // ! fix later !
-        rowData: IRowData<any>[],
+        rowData: IRowData<unknown>[],
         path: string,
         count: number,
         pages: number,

@@ -10,7 +10,7 @@ export default function OrderTable<T extends Array<IOrder>>({
 }: {
     orders: T,
     // ! fix later !
-    rowData: IRowData<any>[],
+    rowData: IRowData<unknown>[],
     count: number,
     pages: number,
 })
