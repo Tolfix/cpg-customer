@@ -5,9 +5,27 @@ import { Modal } from "../../components/Modal";
 import OrderTable from "../../components/Orders/Order.table";
 import { IRowData } from "../../interfaces/RowData";
 
-export function CancelOrder(orderId: IOrder["id"])
+export async function CancelOrder(orderId: IOrder["id"])
 {
+    const session = await getSession();
+    const token = session?.user?.email;
 
+    if(!token)
+        return Promise.resolve(false);
+
+    const res = await fetch(`${process.env.NEXT_PUBLIC_CPG_DOMAIN}/v2/customers/my/orders/${orderId}/cancel`,
+    {
+        method: 'POST',
+        headers:
+            {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+    });
+
+    if(res.status === 200)
+        return Promise.resolve(true);
+    return Promise.resolve(false);
 }
 
 export default (
@@ -81,15 +99,18 @@ export default (
             {
                 return (
                     <>
-                    
-                        <button onClick={() => 
-                            {
-                                setCurrentModalClicked(order.id);
-                                setOpenModal(true);
-                            }} id={`cancel-button-${order.id}`} className="text-indigo-600 hover:text-indigo-900">
-                            Cancel
-                        </button>
-
+                        {order.order_status !== "cancelled" && (
+                            <>
+                                <button onClick={() => 
+                                    {
+                                        setCurrentModalClicked(order.id);
+                                        setOpenModal(true);
+                                    }} id={`cancel-button-${order.id}`} className="text-indigo-600 hover:text-indigo-900"
+                                >
+                                    Cancel
+                                </button>
+                            </>
+                        )}
                     </>
                 )
             }
@@ -116,7 +137,12 @@ export default (
                         <button
                             onClick={() => 
                             {
-                                console.log(this);
+                                if(currentModalClicked)
+                                    CancelOrder(currentModalClicked)?.then(res =>
+                                    {
+                                        if(res)
+                                            setOpenModal(false);
+                                    });
                             }}
                             className="px-5 m-2 rounded bg-green-400 hover:bg-green-600"
                         >
@@ -148,7 +174,8 @@ export async function getServerSideProps(context: any)
             "Content-Type": "application/json",
             "Authorization": `Bearer ${token}`
         }
-    }).then(res => {
+    }).then(res =>
+    {
         count = res.headers.get("X-Total");
         pages = res.headers.get("X-Total-Pages");
         return res.json();
