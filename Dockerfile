@@ -4,5 +4,6 @@ WORKDIR /app
 COPY package.json ./
 RUN npm install
 COPY . .
-RUN npm run build
+RUN NEXT_PUBLIC_CPG_DOMAIN=APP_NEXT_PUBLIC_CPG_DOMAIN npm run build
+ENTRYPOINT ["entrypoint.sh"]
 CMD ["npm", "run", "start"]
