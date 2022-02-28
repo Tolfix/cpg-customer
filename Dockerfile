@@ -44,7 +44,6 @@ RUN chown -R nextjs:nodejs /app/.next
 USER nextjs
 
 EXPOSE 3000
-
 ENV PORT 3000
 
 RUN npx next telemetry disable
