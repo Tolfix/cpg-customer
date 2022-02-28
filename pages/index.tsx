@@ -33,41 +33,14 @@ const Home: NextPage = ({
     invoices,
     orders,
     transactions,
+    customer,
 }: {
     invoices: IInvoice[],
     orders: IOrder[],
     transactions: ITransactions[],
+    customer: ICustomer,
 }) =>
 {
-    const session = useSession();
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    const token = session.data?.user.email
-    const [customer, setCustomer] = useState<ICustomer | null>(null);
-
-    useEffect(() =>
-    {
-        fetch(`${config.CPG_DOMAIN}/v2/customers/my/profile`,
-            {
-                method: 'GET',
-                headers:
-                    {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}`
-                    }
-            }).then(res => res.json()).then(data =>
-        {
-            setCustomer(data);
-        });
-    }, []);
-
-    if (!customer)
-        return (
-            <>
-                <Loading/>
-            </>
-        )
-
     return (
         <>
 
@@ -133,12 +106,8 @@ export async function getServerSideProps(context: any)
         };
     // @ts-ignore
     const token = session?.user.email
-    if(!token)
-        return {
-            props: {}
-        };
 
-    const [invoices, orders, transactions] = [
+    const [invoices, orders, transactions, customer] = [
         await fetch(`${process.env.CPG_DOMAIN}/v2/customers/my/invoices&limit=100`,
         {
             method: "GET",
@@ -163,6 +132,13 @@ export async function getServerSideProps(context: any)
                 "Authorization": `Bearer ${token}`
             }
         }).then(res => res.json()),
+        await fetch(`${process.env.CPG_DOMAIN}/v2/customers/my/profile`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            }
+        }).then(res => res.json()),
     ];
 
     return {
@@ -170,6 +146,7 @@ export async function getServerSideProps(context: any)
             invoices: invoices,
             orders: orders,
             transactions: transactions,
+            customer: customer
         }
     }
 }
