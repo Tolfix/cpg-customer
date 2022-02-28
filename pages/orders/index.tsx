@@ -5,6 +5,7 @@ import { Modal } from "../../components/Modal";
 import OrderTable from "../../components/Orders/Order.table";
 import { IRowData } from "../../interfaces/RowData";
 import getConfig from 'next/config'
+import { mustAuth } from "../../lib/Auth";
 const { publicRuntimeConfig: config } = getConfig()
 
 export async function CancelOrder(orderId: IOrder["id"])
@@ -159,7 +160,11 @@ export default (
 
 export async function getServerSideProps(context: any)
 {
-    const session = await getSession(context);
+    const session = await mustAuth(true, context);
+    if(!session)
+        return {
+            props: {}
+        };
     // @ts-ignore
     const token = session?.user.email
     let query = ``;

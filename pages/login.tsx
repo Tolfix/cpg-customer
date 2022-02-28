@@ -1,8 +1,8 @@
 import { GetServerSideProps } from "next";
-import ForgottonPassword from "../components/ForgottonPassword";
+import Login from "../components/Login";
 import { mustAuth } from "../lib/Auth";
 
-export default () => <ForgottonPassword />
+export default () => <Login />
 
 export const getServerSideProps: GetServerSideProps = async (context) =>
 {

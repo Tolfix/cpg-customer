@@ -5,6 +5,7 @@ import InvoiceModal, { popupCenter } from "../../components/Invoices/Invoice.mod
 import DynamicTable from "../../components/Tables/DynamicTable";
 import { IRowData } from "../../interfaces/RowData";
 import getConfig from 'next/config'
+import { mustAuth } from "../../lib/Auth";
 const { publicRuntimeConfig: config } = getConfig()
 
 export default (
@@ -172,7 +173,11 @@ export default (
 // @ts-ignore
 export async function getServerSideProps(context)
 {
-    const session = await getSession(context);
+    const session = await mustAuth(true, context);
+    if(!session)
+        return {
+            props: {}
+        };
     // @ts-ignore
     const token = session?.user.email
     let query = ``;

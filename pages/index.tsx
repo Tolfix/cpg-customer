@@ -17,6 +17,7 @@ import { IInvoice } from '@cpg/Interfaces/Invoice.interface';
 import { IOrder } from '@cpg/Interfaces/Orders.interface';
 import { ITransactions } from '@cpg/Interfaces/Transactions.interface';
 import getConfig from 'next/config'
+import { mustAuth } from '../lib/Auth';
 const { publicRuntimeConfig: config } = getConfig()
 ChartJS.register(
     CategoryScale,
@@ -125,7 +126,11 @@ const Home: NextPage = ({
 
 export async function getServerSideProps(context: any)
 {
-    const session = await getSession(context);
+    const session = await mustAuth(true, context);
+    if(!session)
+        return {
+            props: {}
+        };
     // @ts-ignore
     const token = session?.user.email
     if(!token)

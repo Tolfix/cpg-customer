@@ -9,24 +9,23 @@ import Navigation from "./Navigation";
 export const Layout: NextComponentType = ({ children }) =>
 {
     const { status, data } = useSession();
-    const router = useRouter();
+    // const router = useRouter();
 
     // if(!router.isFallback)
     //     return <Loading />
 
-    if(router.pathname === "/forgotton-password" && status === "unauthenticated")
-        return <ForgottonPassword />
+    // if(router.pathname === "/forgotton-password" && status === "unauthenticated")
+    //     return <ForgottonPassword />
 
-    if(status === "loading")
-        return <Loading />
+    // if(status === "loading")
+    //     return <Loading />
 
-    if(!data)
-        return <Login />;
-
-    return router.isFallback ? <Loading /> : (
+    // if(!data)
+    //     return <Login />;
+    return (
         <>
             <div>
-                <Navigation />
+                {(data && status === "authenticated") ? <Navigation /> : null}
                 {children}
             </div>
         </>

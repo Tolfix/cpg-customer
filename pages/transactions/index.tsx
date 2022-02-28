@@ -1,6 +1,7 @@
 import { ITransactions } from "@cpg/Interfaces/Transactions.interface"
 import { getSession } from "next-auth/react";
 import getConfig from 'next/config'
+import { mustAuth } from "../../lib/Auth";
 const { publicRuntimeConfig: config } = getConfig()
 
 export default ({
@@ -18,7 +19,11 @@ export default ({
 
 export async function getServerSideProps(context: any)
 {
-    const session = await getSession(context);
+    const session = await mustAuth(true, context);
+    if(!session)
+        return {
+            props: {}
+        };
     // @ts-ignore
     const token = session?.user.email
 
