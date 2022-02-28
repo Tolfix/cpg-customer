@@ -169,7 +169,7 @@ export async function getServerSideProps(context: any)
         query = `?${Object.keys(context.query).map(key => `${key}=${context.query[key]}`).join("&")}`;
     }
     let count, pages;
-    const orders = await fetch(`${config.CPG_DOMAIN}/v2/customers/my/orders${query}`,
+    const orders = await fetch(`${process.env.CPG_DOMAIN}/v2/customers/my/orders${query}`,
     {
         method: "GET",
         headers: {

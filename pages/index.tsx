@@ -134,7 +134,7 @@ export async function getServerSideProps(context: any)
         };
 
     const [invoices, orders, transactions] = [
-        await fetch(`${config.CPG_DOMAIN}/v2/customers/my/invoices&limit=100`,
+        await fetch(`${process.env.CPG_DOMAIN}/v2/customers/my/invoices&limit=100`,
         {
             method: "GET",
             headers: {
@@ -142,7 +142,7 @@ export async function getServerSideProps(context: any)
                 "Authorization": `Bearer ${token}`
             }
         }).then(res => res.json()),
-        await fetch(`${config.CPG_DOMAIN}/v2/customers/my/orders&limit=100`,
+        await fetch(`${process.env.CPG_DOMAIN}/v2/customers/my/orders&limit=100`,
         {
             method: "GET",
             headers: {
@@ -150,7 +150,7 @@ export async function getServerSideProps(context: any)
                 "Authorization": `Bearer ${token}`
             }
         }).then(res => res.json()),
-        await fetch(`${config.CPG_DOMAIN}/v2/customers/my/transactions&limit=100`,
+        await fetch(`${process.env.CPG_DOMAIN}/v2/customers/my/transactions&limit=100`,
         {
             method: "GET",
             headers: {

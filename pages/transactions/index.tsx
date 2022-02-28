@@ -22,7 +22,7 @@ export async function getServerSideProps(context: any)
     // @ts-ignore
     const token = session?.user.email
 
-    const transactions = await fetch(`${config.CPG_DOMAIN}/v2/customers/my/transactions`,
+    const transactions = await fetch(`${process.env.CPG_DOMAIN}/v2/customers/my/transactions`,
     {
         method: "GET",
         headers: {

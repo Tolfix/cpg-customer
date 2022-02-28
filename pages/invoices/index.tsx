@@ -180,10 +180,6 @@ export async function getServerSideProps(context)
     if(context.query)
         query = `?${Object.keys(context.query).map(key => `${key}=${context.query[key]}`).join("&")}`;
 
-    console.log(config.CPG_DOMAIN)
-    console.log(config)
-    console.log(process.env.CPG_DOMAIN)
-    console.log(`${config.CPG_DOMAIN}/v2/customers/my/invoices`)
     let count, pages;
     const invoices = await fetch(`${process.env.CPG_DOMAIN}/v2/customers/my/invoices${query}`,
     {

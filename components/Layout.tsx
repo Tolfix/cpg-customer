@@ -2,6 +2,7 @@ import { NextComponentType } from "next"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/router";
 import ForgottonPassword from "./ForgottonPassword";
+import Loading from "./Loading";
 import Login from "./Login"
 import Navigation from "./Navigation";
 
@@ -10,29 +11,19 @@ export const Layout: NextComponentType = ({ children }) =>
     const { status, data } = useSession();
     const router = useRouter();
 
+    if(!router.isFallback)
+        return <Loading />
+
     if(router.pathname === "/forgotton-password" && status === "unauthenticated")
         return <ForgottonPassword />
 
     if(status === "loading")
-        return (
-            <>
-                {/* Tailwind center middle */}
-                <div className="flex justify-center items-center h-screen">
-                    <div className="w-full max-w-xs">
-                        <div className="text-center">
-                            <div className="text-gray-700 text-xl font-bold">
-                                Loading..
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </>
-        )
+        return <Loading />
 
     if(!data)
         return <Login />;
 
-    return (
+    return router.isFallback ? <Loading /> : (
         <>
             <div>
                 <Navigation />
