@@ -1,5 +1,5 @@
 import { IInvoice } from "@cpg/Interfaces/Invoice.interface";
-import { getSession, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { useState } from "react";
 import InvoiceModal, { popupCenter } from "../../components/Invoices/Invoice.modal";
 import DynamicTable from "../../components/Tables/DynamicTable";
@@ -37,7 +37,7 @@ export default (
             },
             printedPreview: (invoice: IInvoice) =>
             {
-                return `${invoice.id}`;
+                return `${invoice?.id}`;
             }
         },
         {
@@ -53,7 +53,7 @@ export default (
                 let date = (invoice.dates.invoice_date as string).replaceAll("-","");
                 if(!date)
                     date = "N/A";
-                return `${date}${invoice.id}`;
+                return `${date}${invoice?.id}`;
             }
         },
         {
@@ -138,7 +138,7 @@ export default (
                             <button onClick={() =>
                             {
                                 popupCenter({
-                                    url: `${cpg_domain}/v2/customers/my/invoices/${invoice.id}/preview?access_token=${session?.data?.user?.email}`,
+                                    url: `${cpg_domain}/v2/customers/my/invoices/${invoice?.id}/preview?access_token=${session?.data?.user?.email}`,
                                     title: "Invoice Preview",
                                     w: 1200,
                                     h: 1000
