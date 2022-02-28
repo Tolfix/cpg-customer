@@ -44,8 +44,6 @@ ENV PORT 3000
 
 RUN npx next telemetry disable
 
-RUN apk add --no-cache --upgrade bash
-RUN ["chmod", "+x", "./entrypoint.sh"]
 ENTRYPOINT ["/app/entrypoint.sh"]
 
 CMD npm run start
