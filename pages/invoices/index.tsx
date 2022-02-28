@@ -14,7 +14,7 @@ export default (
         count,
         pages,
     }: {
-        invoices: IInvoice[],
+        invoices: IInvoice[] | [],
         count: number,
         pages: number,
     }
@@ -160,11 +160,11 @@ export default (
                 {/* @ts-ignore */}
                 <DynamicTable count={count} pages={pages} path="/invoices" data={invoices} rowData={rowData} />
 
-                <InvoiceModal
+                {invoices.length > 0 ? <InvoiceModal
                     invoice={currentInvoice}
                     setShow={setShowModal}
                     show={showModal}
-                />
+                /> : null}
             </div>
         </>
     )
