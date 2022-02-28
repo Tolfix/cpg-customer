@@ -23,7 +23,7 @@ export default (
     const cpg_domain = config.CPG_DOMAIN;
     const session = useSession();
 
-    const [currentInvoice, setCurrentInvoice] = useState<IInvoice>();
+    const [currentInvoice, setCurrentInvoice] = useState<IInvoice>(invoices[0]);
     const [showModal, setShowModal] = useState(false);
 
     const rowData: IRowData<IInvoice>[] = [
@@ -161,7 +161,7 @@ export default (
                 <DynamicTable count={count} pages={pages} path="/invoices" data={invoices} rowData={rowData} />
 
                 <InvoiceModal
-                    invoice={currentInvoice ?? invoices[0]}
+                    invoice={currentInvoice}
                     setShow={setShowModal}
                     show={showModal}
                 />

@@ -48,7 +48,7 @@ export default ({
     return (
         <>
             <Modal
-                title={`Invoice #${invoice.id}`}
+                title={`Invoice #${invoice?.id}`}
                 onClose={() => setShow(false)}
                 show={show}
             >
