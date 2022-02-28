@@ -182,9 +182,10 @@ export async function getServerSideProps(context)
 
     console.log(config.CPG_DOMAIN)
     console.log(config)
+    console.log(process.env.CPG_DOMAIN)
     console.log(`${config.CPG_DOMAIN}/v2/customers/my/invoices`)
     let count, pages;
-    const invoices = await fetch(`${config.CPG_DOMAIN}/v2/customers/my/invoices${query}`,
+    const invoices = await fetch(`${process.env.CPG_DOMAIN}/v2/customers/my/invoices${query}`,
     {
         method: "GET",
         headers: {
