@@ -18,7 +18,7 @@ WORKDIR /app
 COPY . .
 COPY --from=deps /app/node_modules ./node_modules
 
-RUN NEXT_PUBLIC_CPG_DOMAIN=APP_NEXT_PUBLIC_CPG_DOMAIN npm run build
+RUN npm run build
 
 # Production image, copy all the files and run next
 FROM node:14-alpine AS runner
@@ -40,9 +40,12 @@ RUN chown -R nextjs:nodejs /app/.next
 USER nextjs
 
 EXPOSE 3000
+ENV PORT 3000
 
 RUN npx next telemetry disable
 
+RUN apk add --no-cache --upgrade bash
+RUN ["chmod", "+x", "./entrypoint.sh"]
 ENTRYPOINT ["/app/entrypoint.sh"]
 
 CMD npm run start
