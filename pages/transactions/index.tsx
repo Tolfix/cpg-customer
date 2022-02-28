@@ -1,5 +1,7 @@
 import { ITransactions } from "@cpg/Interfaces/Transactions.interface"
 import { getSession } from "next-auth/react";
+import getConfig from 'next/config'
+const { publicRuntimeConfig: config } = getConfig()
 
 export default ({
     transactions
@@ -20,7 +22,7 @@ export async function getServerSideProps(context: any)
     // @ts-ignore
     const token = session?.user.email
 
-    const transactions = await fetch(`${process.env.NEXT_PUBLIC_CPG_DOMAIN}/v2/customers/my/transactions`,
+    const transactions = await fetch(`${config.CPG_DOMAIN}/v2/customers/my/transactions`,
     {
         method: "GET",
         headers: {

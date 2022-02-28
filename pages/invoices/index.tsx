@@ -4,6 +4,8 @@ import { useState } from "react";
 import InvoiceModal, { popupCenter } from "../../components/Invoices/Invoice.modal";
 import DynamicTable from "../../components/Tables/DynamicTable";
 import { IRowData } from "../../interfaces/RowData";
+import getConfig from 'next/config'
+const { publicRuntimeConfig: config } = getConfig()
 
 export default (
     {
@@ -17,7 +19,7 @@ export default (
     }
 ) =>
 {
-    const cpg_domain = process.env.NEXT_PUBLIC_CPG_DOMAIN;
+    const cpg_domain = config.CPG_DOMAIN;
     const session = useSession();
 
     const [currentInvoice, setCurrentInvoice] = useState<IInvoice>();
@@ -154,6 +156,7 @@ export default (
         <>
             <div className="flex flex-wrap justify-center">
                 {/* <InvoicesTable invoice={invoices} /> */}
+                {/* @ts-ignore */}
                 <DynamicTable count={count} pages={pages} path="/invoices" data={invoices} rowData={rowData} />
 
                 <InvoiceModal
@@ -180,7 +183,7 @@ export async function getServerSideProps(context)
     }
 
     let count, pages;
-    const invoices = await fetch(`${process.env.NEXT_PUBLIC_CPG_DOMAIN}/v2/customers/my/invoices${query}`,
+    const invoices = await fetch(`${config.CPG_DOMAIN}/v2/customers/my/invoices${query}`,
     {
         method: "GET",
         headers: {

@@ -16,6 +16,8 @@ import {
 import { IInvoice } from '@cpg/Interfaces/Invoice.interface';
 import { IOrder } from '@cpg/Interfaces/Orders.interface';
 import { ITransactions } from '@cpg/Interfaces/Transactions.interface';
+import getConfig from 'next/config'
+const { publicRuntimeConfig: config } = getConfig()
 ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -44,7 +46,7 @@ const Home: NextPage = ({
 
     useEffect(() =>
     {
-        fetch(`${process.env.NEXT_PUBLIC_CPG_DOMAIN}/v2/customers/my/profile`,
+        fetch(`${config.CPG_DOMAIN}/v2/customers/my/profile`,
             {
                 method: 'GET',
                 headers:
@@ -132,7 +134,7 @@ export async function getServerSideProps(context: any)
         };
 
     const [invoices, orders, transactions] = [
-        await fetch(`${process.env.NEXT_PUBLIC_CPG_DOMAIN}/v2/customers/my/invoices&limit=100`,
+        await fetch(`${config.CPG_DOMAIN}/v2/customers/my/invoices&limit=100`,
         {
             method: "GET",
             headers: {
@@ -140,7 +142,7 @@ export async function getServerSideProps(context: any)
                 "Authorization": `Bearer ${token}`
             }
         }).then(res => res.json()),
-        await fetch(`${process.env.NEXT_PUBLIC_CPG_DOMAIN}/v2/customers/my/orders&limit=100`,
+        await fetch(`${config.CPG_DOMAIN}/v2/customers/my/orders&limit=100`,
         {
             method: "GET",
             headers: {
@@ -148,7 +150,7 @@ export async function getServerSideProps(context: any)
                 "Authorization": `Bearer ${token}`
             }
         }).then(res => res.json()),
-        await fetch(`${process.env.NEXT_PUBLIC_CPG_DOMAIN}/v2/customers/my/transactions&limit=100`,
+        await fetch(`${config.CPG_DOMAIN}/v2/customers/my/transactions&limit=100`,
         {
             method: "GET",
             headers: {
