@@ -1,4 +1,3 @@
-#!/bin/sh
 # no verbose
 set +x
 # config

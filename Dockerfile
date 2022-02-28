@@ -45,6 +45,7 @@ ENV PORT 3000
 
 RUN npx next telemetry disable
 
+RUN chmod +x /docker-entrypoint.sh
 ENTRYPOINT ["/app/entrypoint.sh"]
 
 CMD npm run start
