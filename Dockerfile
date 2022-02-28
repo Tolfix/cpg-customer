@@ -34,6 +34,7 @@ COPY --from=builder /app/package.json ./package.json
 COPY --from=builder /app/entrypoint.sh ./entrypoint.sh
 COPY .env.production .
 
+RUN apk add --no-cache --upgrade bash
 RUN chmod +x /app/entrypoint.sh
 ENTRYPOINT ["/app/entrypoint.sh"]
 
