@@ -11,8 +11,8 @@ export const Layout: NextComponentType = ({ children }) =>
     const { status, data } = useSession();
     const router = useRouter();
 
-    if(!router.isFallback)
-        return <Loading />
+    // if(!router.isFallback)
+    //     return <Loading />
 
     if(router.pathname === "/forgotton-password" && status === "unauthenticated")
         return <ForgottonPassword />
