@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -8,6 +9,9 @@ const nextConfig = {
     // !! WARN !!
     ignoreBuildErrors: true,
   },
+  publicRuntimeConfig: {
+    CPG_DOMAIN: process.env.CPG_DOMAIN,
+  }
 }
 
 module.exports = nextConfig
