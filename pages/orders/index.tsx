@@ -6,6 +6,7 @@ import OrderTable from "../../components/Orders/Order.table";
 import { IRowData } from "../../interfaces/RowData";
 import getConfig from 'next/config'
 import { mustAuth } from "../../lib/Auth";
+import TokenValid from "../../lib/TokenValid";
 const { publicRuntimeConfig: config } = getConfig()
 
 export async function CancelOrder(orderId: IOrder["id"])
@@ -166,7 +167,11 @@ export async function getServerSideProps(context: any)
             props: {}
         };
     // @ts-ignore
-    const token = session?.user.email
+    const token = session?.user.email as string
+    if(!(await TokenValid(token, context)))
+        return {
+            props: {}
+        };
     let query = ``;
     
     if(context.query)

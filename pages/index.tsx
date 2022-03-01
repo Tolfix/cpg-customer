@@ -1,8 +1,5 @@
 import { ICustomer } from '@cpg/Interfaces/Customer.interface';
 import type {NextPage} from 'next'
-import {getSession, useSession} from 'next-auth/react';
-import {useEffect, useState} from 'react';
-import Loading from "../components/Loading";
 import { Bar, } from 'react-chartjs-2';
 import {
     Chart as ChartJS,
@@ -16,9 +13,8 @@ import {
 import { IInvoice } from '@cpg/Interfaces/Invoice.interface';
 import { IOrder } from '@cpg/Interfaces/Orders.interface';
 import { ITransactions } from '@cpg/Interfaces/Transactions.interface';
-import getConfig from 'next/config'
 import { mustAuth } from '../lib/Auth';
-const { publicRuntimeConfig: config } = getConfig()
+import TokenValid from '../lib/TokenValid';
 ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -104,8 +100,13 @@ export async function getServerSideProps(context: any)
         return {
             props: {}
         };
+
     // @ts-ignore
-    const token = session?.user.email
+    const token = session?.user.email as string
+    if(!(await TokenValid(token, context)))
+        return {
+            props: {}
+        };
 
     const [invoices, orders, transactions, customer] = [
         await fetch(`${process.env.CPG_DOMAIN}/v2/customers/my/invoices&limit=100`,
