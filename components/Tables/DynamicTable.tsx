@@ -57,7 +57,7 @@ export default function DynamicTable<T>(
         const option = form.searchOption.value;
         const search = form.search.value;
 
-        return window.location.href = `/${path}?${option}=${search}`;
+        return window.location.href = `${path}?${option}=${search}`;
     }
 
     return (
@@ -67,7 +67,7 @@ export default function DynamicTable<T>(
             <div className='mt-5'>
                 <form onSubmit={search} action="">
                     {/* Select for different categories */}
-                    <select className='rounded' name="searchOption" id="">
+                    <select className='rounded py-0.5 bg-transparent border border-indigo-300 focus:border-indigo-400' name="searchOption" id="">
                         {rowData.map((row) =>
                             (!row.extra && <>
                                 <option key={row.id} value={row.queryFormat()} className='uppercase'>{row.name}</option>
@@ -75,14 +75,19 @@ export default function DynamicTable<T>(
                         )}
                     </select>
                     {/* Input for what to search */}
-                    <input className='rounded bg-gray-200 focus:bg-gray-100' type="text" name='search' />
+                    <input className='rounded ml-2 border py-0.5 bg-transparent border-indigo-300 focus:border-indigo-400' type="text" name='search' />
                     {/* Button to search */}
-                    <button type='submit' className='bg-purple-300 hover:bg-purple-400 rounded px-2'>Search</button>
+                    <button type='submit' className='
+                        bg-transparent ml-2 inline-flex items-center px-2.5 py-1.5 
+                        border border-indigo-300 
+                        dark:border-gray-600 rounded-lg 
+                        text-sm leading-5 font-medium text-indigo-700 hover:text-indigo-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:bg-indigo-50 active:text-gray-800 transition ease-in-out duration-150
+                    '>Search</button>
                 </form>
             </div>
             <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div className="inline-block py-2 min-w-full sm:px-6 lg:px-8">
-                    <div className="overflow-hidden shadow-md sm:rounded-lg">
+                    <div className="overflow-hidden shadow-md rounded-bl-none rounded-lg">
                         <table className="min-w-full">
                             <thead className="bg-gray-50 dark:bg-gray-700">
                             <tr>
@@ -142,26 +147,28 @@ export default function DynamicTable<T>(
                     <div>
                         {/* Pagination */}
                         <div className="">
-                            {/* Pick limit selection */}
                             <div>
                                 <select onChange={(event) =>
                                 {
                                     changeNewLimit(parseInt(event.target.value));
-                                }} className="rounded" name="limit" id="limit">
+                                }} className="rounded rounded-tl-none rounded-tr-none" name="limit" id="limit">
                                     {[10, 25, 50, 100].map((limit) =>
                                         // Check if limit is selected
                                         <option key={limit} value={limit} className='uppercase' selected={limit === parseInt(router.query.limit as string)}>{limit}</option>
                                     )}
                                 </select>
                             </div>
+                            {/* Pick limit selection */}
                             <div className="flex justify-center items-center mt-2">
                                 <div className="text-sm leading-5 text-gray-500">
                                     {/* Click to back page */}
                                     {skip !== 0 && (
                                         <>
                                             <button
-                                                className="mr-2 inline-flex items-center px-2.5 py-1.5 border border-gray-300 dark:border-gray-
-                                                600 rounded-lg text-sm leading-5 font-medium text-gray-700 hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:bg-gray-50 active:text-gray-800 transition ease-in-out duration-150"
+                                                className="
+                                                mr-2 inline-flex items-center px-2.5 py-1.5 border border-indigo-300 dark:border-gray-
+                    600 rounded-lg text-sm leading-5 font-medium text-indigo-700 hover:text-indigo-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:bg-indigo-50 active:text-gray-800 transition ease-in-out duration-150
+                                                "
                                                 onClick={() => changeNewPage(currentPage - 1)}
                                             >
                                                 Back                          
@@ -188,8 +195,9 @@ export default function DynamicTable<T>(
                                     {(skip + limit) < count && (
                                         <>
                                             <button
-                                                className="ml-2 inline-flex items-center px-2.5 py-1.5 border border-gray-300 dark:border-gray-
-                                                600 rounded-lg text-sm leading-5 font-medium text-gray-700 hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:bg-gray-50 active:text-gray-800 transition ease-in-out duration-150
+                                                className="
+                                                    ml-2 inline-flex items-center px-2.5 py-1.5 border border-indigo-300 dark:border-gray-
+                                                    600 rounded-lg text-sm leading-5 font-medium text-indigo-700 hover:text-indigo-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:bg-indigo-50 active:text-gray-800 transition ease-in-out duration-150
                                                 "
                                                 onClick={() => changeNewPage(currentPage + 1)}
                                             >
