@@ -4,6 +4,7 @@ import { mustAuth } from "../lib/Auth";
 import TokenValid from "../lib/TokenValid";
 import getConfig from 'next/config'
 import { useState } from "react";
+import { Modal } from "../components/Modal";
 const { publicRuntimeConfig: config } = getConfig()
 
 export default ({
@@ -17,6 +18,7 @@ export default ({
 {
     const cpg_domain = config.CPG_DOMAIN;
     const [profilePicture, setProfilePicture] = useState<string>("");
+    const [showModal, setShowModal] = useState(false);
 
     const saveProfile = (target: string) =>
     {
@@ -46,9 +48,64 @@ export default ({
         {
             setProfilePicture(data.data);
         });
+
+    const changeProfilePicture = (e: { preventDefault: () => void; target: any; }) =>
+    {
+        e.preventDefault();
+        const form = e.target;
+        const data = new FormData();
+        console.log(form.profile_picture.files);
+        data.append("image", form.profile_picture.files[0]);
+        fetch(`${cpg_domain}/v2/customers/my/profile_picture`, {
+            method: "POST",
+            headers:
+            {
+                "Authorization": `Bearer ${token}`
+            },
+            body: data
+        }).then(e => e.json()).then(e =>
+            {
+                setProfilePicture(e.data);
+            });
+    };
     // Check if profile picture, and if true set it to the profile picture
     return (
         <>
+
+            <Modal
+                show={showModal}
+                onClose={() => setShowModal(false)}
+                title="Edit Profile Picture"
+            >
+                <form onSubmit={changeProfilePicture}>
+                <div className="flex justify-center m-14 mx-10">
+                    <div className="mb-3">
+                        <label 
+                            htmlFor="profile_picture"
+                            className="form-label inline-block mb-2 text-gray-700"
+                        >
+                            Max file size: 5 GB
+                        </label>
+                        <input name="profile_picture" className="
+                                form-control
+                                block w-full px-2 py-1.5 text-xl font-normal
+                                text-gray-700 bg-white bg-clip-padding
+                                border border-solid border-gray-300 rounded transition
+                                ease-in-out m-0
+                                focus:text-gray-700 focus:bg-white 
+                                focus:border-blue-600 focus:outline-none"
+                                id="profile_picture" 
+                                type="file"
+                                accept="image/png, image/jpg, image/jpeg" 
+                        />
+                        <button className="border border-indigo-300 p-3 rounded" type="submit">
+                            Upload
+                        </button>
+                    </div>
+                </div>
+                </form>
+            </Modal>
+        
             {/* Customer interface, possible to edit each field and save each one */}
             {/* Each as a form input which goes to POST /v2/customers/my/profile */}
             {/* Also using tailwind css to make life easier */}
@@ -63,7 +120,18 @@ export default ({
                                 <div className="flex flex-col bg-white rounded p-5">
                                     {profile.profile_picture ? <>
                                         <div className="text-center justify-center items-center">
-                                            <img src={`data:image/png;base64,${profilePicture}`} alt="Profile Picture" className="rounded-full w-52" />
+                                            <span className="relative inline-flex">
+                                                <img src={`data:image/png;base64,${profilePicture}`} alt="Profile Picture" className="rounded-full w-52" />
+                                                <span className="flex absolute h-3 w-3 top-0 right-5">
+                                                    {/* Edit button */}
+                                                    <button onClick={() => setShowModal(true)} className="text-indigo-600 hover:text-indigo-900 px-4">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                                            <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
+                                                            <path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd" />
+                                                        </svg>
+                                                    </button>
+                                                </span>
+                                            </span>
                                         </div>
                                     </> : null}
                                     <hr />
