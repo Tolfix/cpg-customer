@@ -124,7 +124,7 @@ export default (
         },
         {
             id: "preview",
-            name: "preview",
+            name: "Preview",
             extra: true,
             sortable: false,
             queryFormat: () =>
@@ -144,7 +144,7 @@ export default (
                                     w: 1200,
                                     h: 1000
                                 });
-                            }} className='text-indigo-600 hover:text-indigo-900'>
+                            }} className='text-indigo-600 hover:text-indigo-900 px-4'>
                                 Preview
                             </button>
                         </td>

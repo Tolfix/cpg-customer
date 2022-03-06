@@ -71,10 +71,10 @@ export default (
             },
             printedPreview: (order: IOrder) =>
             {
-                let date = (order.dates.createdAt).toString();
-                if(!date)
-                    date = "N/A";
-                return `${date}`;
+                const date = (new Date(order.dates.createdAt));
+                // In month make it two digits
+                const month = (date.getMonth() + 1).toString().padStart(2, "0");
+                return `${date.getFullYear()}-${month}-${date.getDate()}`;
             }
         },
         {
