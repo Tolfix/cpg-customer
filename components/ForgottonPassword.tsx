@@ -1,6 +1,6 @@
 import { useState } from "react";
 import getConfig from 'next/config'
-const { publicRuntimeConfig: config } = getConfig()
+const { publicRuntimeConfig: config } = getConfig();
 
 export default () =>
 {
@@ -12,7 +12,7 @@ export default () =>
         e.preventDefault();
         const form = e.target;
         const email = form.email.value;
-        const res = await fetch(`${config.CPG_DOMAIN}/v2/customers/my/reset-password`, {
+        const res = await fetch(`/api/resetpassword`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -25,7 +25,6 @@ export default () =>
         if(res.status == 200)
             return setMessage("An email has been sent to you with instructions on how to reset your password.");
         
-        res.json().then(console.error);
         return setMessage("That email address is not registered.");
     }
 
