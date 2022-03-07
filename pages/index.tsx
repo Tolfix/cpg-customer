@@ -1,5 +1,5 @@
 import { ICustomer } from '@cpg/Interfaces/Customer.interface';
-import type {NextPage} from 'next'
+import type { NextPage } from 'next'
 import { Bar, } from 'react-chartjs-2';
 import {
     Chart as ChartJS,
