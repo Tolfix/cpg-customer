@@ -12,6 +12,11 @@ const routes = [
         exact: true,
     },
     {
+        path: '/quotes',
+        name: 'Quotes',
+        exact: true,
+    },
+    {
         path: '/orders',
         name: 'Orders',
         exact: true,
