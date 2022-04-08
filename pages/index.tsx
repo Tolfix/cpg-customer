@@ -15,6 +15,7 @@ import { IOrder } from '@cpg/Interfaces/Orders.interface';
 import { ITransactions } from '@cpg/Interfaces/Transactions.interface';
 import { mustAuth } from '../lib/Auth';
 import TokenValid from '../lib/TokenValid';
+import Head from 'next/head';
 ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -39,7 +40,9 @@ const Home: NextPage = ({
 {
     return (
         <>
-
+            <Head>
+                <title>Home</title>
+            </Head>
             {/* Customer portal, with tailwind */}
             <div className="flex flex-col justify-center items-center mt-32 w-screen">
                 <div className="max-w-xs">

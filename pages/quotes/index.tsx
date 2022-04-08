@@ -8,6 +8,7 @@ import { mustAuth } from "../../lib/Auth";
 import TokenValid from "../../lib/TokenValid";
 import { IQuotes } from "@cpg/Interfaces/Quotes.interface";
 import { Modal } from "../../components/Modal";
+import Head from "next/head";
 const { publicRuntimeConfig: config } = getConfig()
 
 export default (
@@ -183,6 +184,9 @@ export default (
     
     return (
         <>
+            <Head>
+                <title>Quotes</title>
+            </Head>
             <div className="flex flex-wrap justify-center">
                 {/* @ts-ignore */}
                 <DynamicTable count={count} pages={pages} rowData={rowData} data={quotes} />

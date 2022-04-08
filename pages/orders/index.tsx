@@ -7,6 +7,7 @@ import { IRowData } from "../../interfaces/RowData";
 import getConfig from 'next/config'
 import { mustAuth } from "../../lib/Auth";
 import TokenValid from "../../lib/TokenValid";
+import Head from "next/head";
 const { publicRuntimeConfig: config } = getConfig()
 
 export async function CancelOrder(orderId: IOrder["id"])
@@ -123,6 +124,9 @@ export default (
 
     return (
         <>
+            <Head>
+                <title>Orders</title>
+            </Head>
             <div className="flex flex-wrap justify-center">
                 <OrderTable count={count} pages={pages} orders={orders} rowData={rowDataOrder} />
                 <Modal

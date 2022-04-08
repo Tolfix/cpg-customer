@@ -10,7 +10,6 @@ export default class _Document extends Document
                     <Head>
                         <meta charSet="utf-8" />
                         <link rel="manifest" href="/manifest.json" />
-                        <link rel="apple-touch-icon" href="/icon-512x512.png" />
                         <meta name="theme-color" content="#4aa447" />
                     </Head>
                     <body className="bg-[#e3ebee]">

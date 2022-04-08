@@ -1,4 +1,5 @@
 import { ITransactions } from "@cpg/Interfaces/Transactions.interface"
+import Head from "next/head";
 import DynamicTable from "../../components/Tables/DynamicTable";
 import { IRowData } from "../../interfaces/RowData";
 import { mustAuth } from "../../lib/Auth";
@@ -104,6 +105,9 @@ export default ({
 
     return (
         <>
+            <Head>
+                <title>Transactions</title>
+            </Head>
             <div className="flex flex-wrap justify-center">
                 {/* @ts-ignore */}
                 <DynamicTable count={count} pages={pages} rowData={rowData} data={transactions} />

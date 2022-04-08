@@ -7,6 +7,7 @@ import { IRowData } from "../../interfaces/RowData";
 import getConfig from 'next/config'
 import { mustAuth } from "../../lib/Auth";
 import TokenValid from "../../lib/TokenValid";
+import Head from "next/head";
 const { publicRuntimeConfig: config } = getConfig()
 
 export default (
@@ -156,6 +157,9 @@ export default (
 
     return (
         <>
+            <Head>
+                <title>Invoices</title>
+            </Head>
             <div className="flex flex-wrap justify-center">
                 {/* <InvoicesTable invoice={invoices} /> */}
                 {/* @ts-ignore */}
