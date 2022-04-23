@@ -4,7 +4,8 @@ import { useState } from "react";
 export default () =>
 {
 
-    const [email, setEmail] = useState('')
+    const [email, setEmail] = useState('');
+    const [error, setError] = useState('');
 
     const login = async (e: { preventDefault: () => void; target: any; }) =>
     {
@@ -14,9 +15,16 @@ export default () =>
             {
                 username: form.username.value,
                 password: form.password.value,
+                redirect: false,
                 callbackUrl: `${window.location.origin}/`
             }
-        )
+        ).then((msg: any) => 
+        {
+            if(msg.status === 401)
+            {
+                setError('Invalid username or password');
+            }
+        })
     }
 
     return (
@@ -24,6 +32,7 @@ export default () =>
             <div>
                 <div className="flex flex-col justify-center items-center h-screen w-screen">
                     <div className="max-w-xs">
+                        {error && <div className="text-red-500 text-center font-bold">{error}</div>}
                         <div className="text-center">
                             <div className="text-gray-700 text-xl font-bold">
                                 <form onSubmit={login}>
