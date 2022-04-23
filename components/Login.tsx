@@ -20,9 +20,16 @@ export default () =>
             }
         ).then((msg: any) => 
         {
+            console.log(msg);
             if(msg.status === 401)
             {
                 setError('Invalid username or password');
+            }
+
+            if(msg.status === 200)
+            {
+                setError('');
+                window.location.href = `${window.location.origin}/`;
             }
         })
     }
