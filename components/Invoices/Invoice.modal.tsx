@@ -93,13 +93,13 @@ export default ({
                                 )}
                             </p>
                             <p>
-                                Amount: {invoice.amount} SEK
+                                Amount: {invoice.amount.toFixed(2)} {invoice.currency}
                             </p>
                             <p>
                                 Tax Due: {invoice.tax_rate}%
                             </p>
                             <p>
-                                Total: {(invoice.amount)+(invoice.amount*invoice.tax_rate/100)} SEK
+                                Total: {(invoice.amount)+(invoice.amount*invoice.tax_rate/100)} {invoice.currency}
                             </p>
                             <p>
                                 Payment Method: {invoice.payment_method}

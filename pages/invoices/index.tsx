@@ -52,7 +52,7 @@ export default (
             },
             printedPreview: (invoice: IInvoice) =>
             {
-                let date = (invoice.dates.invoice_date as string).replaceAll("-","");
+                let date = (invoice.dates?.invoice_date as string)?.replaceAll("-","");
                 if(!date)
                     date = "N/A";
                 return `${date}${invoice?.id}`;
@@ -68,7 +68,7 @@ export default (
             },
             printedPreview: (invoice: IInvoice) =>
             {
-                return `${invoice.dates?.due_date.toString() || "?"}`;
+                return `${invoice.dates?.due_date?.toString() || "?"}`;
             }
         },
         {
@@ -81,7 +81,7 @@ export default (
             },
             printedPreview: (invoice: IInvoice) =>
             {
-                return `${ (invoice.amount + ((invoice.amount / 100) * invoice.tax_rate)).toString()}`;
+                return `${ (invoice.amount + ((invoice.amount / 100) * invoice.tax_rate)).toFixed(2).toString()} ${invoice.currency}`;
             }
         },
         {

@@ -65,7 +65,7 @@ export default ({
             },
             printedPreview: (transactions: ITransactions) =>
             {
-                return `${transactions.amount}`;
+                return `${transactions.amount.toFixed(2).toString()} ${transactions.currency}`;
             }
         },
         {
@@ -110,7 +110,7 @@ export default ({
             </Head>
             <div className="flex flex-wrap justify-center">
                 {/* @ts-ignore */}
-                <DynamicTable count={count} pages={pages} rowData={rowData} data={transactions} />
+                <DynamicTable path="/transactions" count={count} pages={pages} rowData={rowData} data={transactions} />
             </div>
         </>
     )
