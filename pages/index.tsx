@@ -15,7 +15,7 @@ import { IOrder } from '@cpg/Interfaces/Orders.interface';
 import { ITransactions } from '@cpg/Interfaces/Transactions.interface';
 import { mustAuth } from '../lib/Auth';
 import TokenValid from '../lib/TokenValid';
-import Head from 'next/head';
+import Navigation from "../components/Navigation";
 ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -26,72 +26,16 @@ ChartJS.register(
 );
 
 // @ts-ignore
-const Home: NextPage = ({
-    invoices,
-    orders,
-    transactions,
-    customer,
-}: {
-    invoices: IInvoice[],
-    orders: IOrder[],
-    transactions: ITransactions[],
-    customer: ICustomer,
-}) =>
+const Home: NextPage = () =>
 {
     return (
         <>
-            <Head>
-                <title>Home</title>
-            </Head>
-            {/* Customer portal, with tailwind */}
-            <div className="flex flex-col justify-center items-center mt-32 w-screen">
-                <div className="max-w-xs">
-                    <div className="text-center">
-                        <div className="text-gray-700 text-xl font-bold">
-                            Welcome {customer.personal.first_name} {customer.personal.last_name}
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <Bar 
-                    data={{
-                        labels: [""],
-                        datasets: [
-                            {
-                                label: "Invoices",
-                                data: [invoices.length],
-                                backgroundColor: [
-                                    '#FF6384',
-                                ],
-                                hoverBackgroundColor: [
-                                    '#FF6384',
-                                ],
-                            },
-                            {
-                                label: "Orders",
-                                data: [orders.length],
-                                backgroundColor: [
-                                    '#A855F7',
-                                ],
-                                hoverBackgroundColor: [
-                                    '#A855F7',
-                                ],
-                            },
-                            {
-                                label: "Transactions",
-                                data: [transactions.length],
-                                backgroundColor: [
-                                    '#36A2EB',
-                                ],
-                                hoverBackgroundColor: [
-                                    '#36A2EB',
-                                ],
-                            }
-                        ],
-                        
-                    }} />
-                </div>
-            </div>
+            <Navigation children={
+                <>
+                    <p>test
+                    </p>
+                </>
+            }/>
         </>
     );
 }
@@ -155,4 +99,3 @@ export async function getServerSideProps(context: any)
     }
 }
 export default Home;
-

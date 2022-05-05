@@ -32,16 +32,16 @@ export default ({
             const data = {
                 [target]: form[target].value
             }
-            fetch(`${cpg_domain}/v2/customers/my/profile`,
-            {
-                method: 'PUT',
-                headers:
+            await fetch(`${cpg_domain}/v2/customers/my/profile`,
                 {
-                    "Content-Type": "application/json",
-                    'Authorization': `Bearer ${token}`
-                },
-                body: JSON.stringify(data)
-            })
+                    method: 'PUT',
+                    headers:
+                        {
+                            "Content-Type": "application/json",
+                            'Authorization': `Bearer ${token}`
+                        },
+                    body: JSON.stringify(data)
+                })
         }
     }
 

@@ -12,7 +12,7 @@ export default class _Document extends Document
                         <link rel="manifest" href="/manifest.json" />
                         <meta name="theme-color" content="#4aa447" />
                     </Head>
-                    <body className="bg-[#e3ebee]">
+                    <body className="">
                         <Main />
                         <NextScript />
                         <div id="modal-root"></div>
