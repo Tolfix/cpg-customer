@@ -119,7 +119,10 @@ export default () =>
                     </FormControl>
                 </form>
                 <HStack w={'full'} justify={'space-between'} mb={4}>
-                    <Button variant={'link'} colorScheme={'purple'}>Forgot Password?</Button>
+                    <Button onClick={() =>
+                    {
+                        window.location.href = `${window.location.origin}/forgotton-password`;
+                    }} variant={'link'} colorScheme={'purple'}>Forgot Password?</Button>
                 </HStack>
                 <Button rounded={'md'} variant={"outline"} colorScheme={'purple'} w={['full']} onClick={login}>
                     Login
