@@ -272,12 +272,17 @@ const MobileNav = ({ onOpen, profile, ...rest }: MobileProps) =>
                             <MenuItem onClick={() =>
                             {
                                 window.location.href = `/profile`;
-                            }}>Profile</MenuItem>
+                            }}>
+                                Profile
+                            </MenuItem>
                             <MenuDivider />
                             <MenuItem onClick={() =>
                             {
                                 signOut();
-                            }}>Sign out</MenuItem>
+                            }}
+                            >
+                                Sign out
+                            </MenuItem>
                         </MenuList>
                     </Menu>
                 </Flex>

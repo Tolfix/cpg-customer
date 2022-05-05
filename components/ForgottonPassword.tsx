@@ -1,6 +1,4 @@
 import { useState } from "react";
-import getConfig from 'next/config'
-const { publicRuntimeConfig: config } = getConfig();
 
 export default () =>
 {
@@ -24,7 +22,7 @@ export default () =>
 
         if (res.status == 200)
             return setMessage("An email has been sent to you with instructions on how to reset your password.");
-        
+
         return setMessage("That email address is not registered.");
     }
 
