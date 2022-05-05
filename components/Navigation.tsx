@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 import
 {
     IconButton,
@@ -40,6 +40,8 @@ import { FaDollarSign } from "react-icons/fa";
 import { ICustomer } from "@cpg/Interfaces/Customer.interface";
 import { useRouter } from 'next/router';
 import { signOut } from "next-auth/react";
+import { ICompanyData } from '../interfaces/CompanyData';
+import getCompanyData from '../lib/Company.fetch';
 
 interface LinkItemProps
 {
@@ -175,12 +177,34 @@ interface MobileProps extends FlexProps
 const MobileNav = ({ onOpen, profile, ...rest }: MobileProps) =>
 {
 
-    console.log(profile);
-
     const [username, setUsername] = useState(`${profile?.personal?.first_name} ${profile?.personal?.last_name}` || "Set your name!");
     const [userImg, setUserImg] = useState(profile?.profile_picture ?? "")
     const [userRole, setUserRole] = useState(profile?.personal.email ?? "")
 
+    const [company, setCompany] = useState<ICompanyData>({
+        COMPANY_LOGO: '',
+        COMPANY_NAME: '',
+        CPG_DOMAIN: '',
+    });
+
+    useEffect(() =>
+    {
+        getCompanyData().then(company => setCompany(company));
+    }, [setCompany]);
+
+    const fetchProfilePicture = async () =>
+    {
+        const picture = await fetch(
+            `${company.CPG_DOMAIN}/v2/images/${profile.profile_picture}`
+        ).then(e => e.json());
+        const base64 = `data:${picture.mime};base64,${picture.data}`;
+        return base64;
+    }
+
+    useEffect(() =>
+    {
+        fetchProfilePicture().then(setUserImg);
+    }, [setUserImg, company])
 
     return (
         <Flex
@@ -206,7 +230,7 @@ const MobileNav = ({ onOpen, profile, ...rest }: MobileProps) =>
                 fontSize="2xl"
                 fontFamily="monospace"
                 fontWeight="bold">
-                CPG Portal
+                {company.COMPANY_NAME}
             </Text>
 
             <HStack spacing={{ base: '0', md: '6' }}>
@@ -245,9 +269,10 @@ const MobileNav = ({ onOpen, profile, ...rest }: MobileProps) =>
                         <MenuList
                             bg={useColorModeValue('white', 'gray.900')}
                             borderColor={useColorModeValue('gray.200', 'gray.700')}>
-                            <MenuItem>Profile</MenuItem>
-                            <MenuItem>Settings</MenuItem>
-                            <MenuItem>Billing</MenuItem>
+                            <MenuItem onClick={() =>
+                            {
+                                window.location.href = `/profile`;
+                            }}>Profile</MenuItem>
                             <MenuDivider />
                             <MenuItem onClick={() =>
                             {

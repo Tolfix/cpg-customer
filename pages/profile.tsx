@@ -29,7 +29,6 @@ export default ({
         {
             e.preventDefault();
             const form = e.target;
-            console.log(form[target].value);
             const data = {
                 [target]: form[target].value
             }

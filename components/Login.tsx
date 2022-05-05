@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Box, Button, FormControl, FormLabel, Heading, HStack, Input, InputGroup, Text, VStack } from '@chakra-ui/react';
 import { InputRightElement } from "@chakra-ui/input";
 import { ICompanyData } from "../interfaces/CompanyData";
+import getCompanyData from "../lib/Company.fetch";
 export default () =>
 {
     const [email, setEmail] = useState('');
@@ -13,18 +14,13 @@ export default () =>
     const [company, setCompany] = useState<ICompanyData>({
         COMPANY_LOGO: '',
         COMPANY_NAME: '',
+        CPG_DOMAIN: '',
     });
-
-    const getCompany = async () =>
-    {
-        const companyName = await fetch(`/api/info/company`).then(res => res.json());
-        return companyName;
-    }
 
     useEffect(() =>
     {
-        getCompany().then(company => setCompany(company));
-    }, [getCompany, company, setCompany]);
+        getCompanyData().then(company => setCompany(company));
+    }, [getCompanyData, company, setCompany]);
 
     const login = async (e: { preventDefault: () => void; target: any; }) =>
     {
