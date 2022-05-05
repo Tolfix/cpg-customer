@@ -7,14 +7,14 @@ export default () => <Login />
 export const getServerSideProps: GetServerSideProps = async (context) =>
 {
     const session = await mustAuth(false, context);
-    if(!session)
+    if (!session)
         return {
             props: {}
         };
 
     return {
         props: {
-            
+
         }
     };
 

@@ -5,6 +5,7 @@ import TokenValid from "../lib/TokenValid";
 import { useState } from "react";
 import { Modal } from "../components/Modal";
 import Head from "next/head";
+import Navigation from "../components/Navigation";
 
 export const currencyCodes = ["AED", "AFN", "ALL", "AMD", "ANG", "AOA", "ARS", "AUD", "AWG", "AZN", "BAM", "BBD", "BDT", "BGN", "BHD", "BIF", "BMD", "BND", "BOB", "BOV", "BRL", "BSD", "BTN", "BWP", "BYR", "BZD", "CAD", "CDF", "CHE", "CHF", "CHW", "CLF", "CLP", "CNY", "COP", "COU", "CRC", "CUC", "CUP", "CVE", "CZK", "DJF", "DKK", "DOP", "DZD", "EGP", "ERN", "ETB", "EUR", "FJD", "FKP", "GBP", "GEL", "GHS", "GIP", "GMD", "GNF", "GTQ", "GYD", "HKD", "HNL", "HRK", "HTG", "HUF", "IDR", "ILS", "INR", "IQD", "IRR", "ISK", "JMD", "JOD", "JPY", "KES", "KGS", "KHR", "KMF", "KPW", "KRW", "KWD", "KYD", "KZT", "LAK", "LBP", "LKR", "LRD", "LSL", "LTL", "LVL", "LYD", "MAD", "MDL", "MGA", "MKD", "MMK", "MNT", "MOP", "MRO", "MUR", "MVR", "MWK", "MXN", "MXV", "MYR", "MZN", "NAD", "NGN", "NIO", "NOK", "NPR", "NZD", "OMR", "PAB", "PEN", "PGK", "PHP", "PKR", "PLN", "PYG", "QAR", "RON", "RSD", "RUB", "RWF", "SAR", "SBD", "SCR", "SDG", "SEK", "SGD", "SHP", "SLL", "SOS", "SRD", "SSP", "STD", "SYP", "SZL", "THB", "TJS", "TMT", "TND", "TOP", "TRY", "TTD", "TWD", "TZS", "UAH", "UGX", "USD", "USN", "USS", "UYI", "UYU", "UZS", "VEF", "VND", "VUV", "WST", "XAF", "XAG", "XAU", "XBA", "XBB", "XBC", "XBD", "XCD", "XDR", "XFU", "XOF", "XPD", "XPF", "XPT", "XTS", "XXX", "YER", "ZAR", "ZMW"];
 
@@ -109,213 +110,215 @@ export default ({
                     </div>
                 </form>
             </Modal>
+            <Navigation profile={profile}>
 
-            {/* Customer interface, possible to edit each field and save each one */}
-            {/* Each as a form input which goes to POST /v2/customers/my/profile */}
-            {/* Also using tailwind css to make life easier */}
-            <div>
-                <div className="flex flex-wrap justify-center items-center mt-2">
-                    <div className="">
-                        <div className="text-center">
-                            <div className="text-gray-700 text-xl font-bold grid">
+                {/* Customer interface, possible to edit each field and save each one */}
+                {/* Each as a form input which goes to POST /v2/customers/my/profile */}
+                {/* Also using tailwind css to make life easier */}
+                <div>
+                    <div className="flex flex-wrap justify-center items-center mt-2">
+                        <div className="">
+                            <div className="text-center">
+                                <div className="text-gray-700 text-xl font-bold grid">
 
-                                {/* Profile picture */}
-                                {/* Portfolio of user */}
-                                <div className="flex flex-col bg-white rounded p-5">
-                                    {profile.profile_picture ? <>
-                                        <div className="text-center justify-center items-center">
-                                            <span className="relative inline-flex">
-                                                <img src={`data:image/png;base64,${profilePicture}`} alt="Profile Picture" className="rounded-full w-52" />
-                                                <span className="flex absolute h-3 w-3 top-0 right-5">
-                                                    {/* Edit button */}
-                                                    <button onClick={() => setShowModal(true)} className="text-indigo-600 hover:text-indigo-900 px-4">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                                            <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
-                                                            <path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd" />
-                                                        </svg>
-                                                    </button>
+                                    {/* Profile picture */}
+                                    {/* Portfolio of user */}
+                                    <div className="flex flex-col bg-white rounded p-5">
+                                        {profile.profile_picture ? <>
+                                            <div className="text-center justify-center items-center">
+                                                <span className="relative inline-flex">
+                                                    <img src={`data:image/png;base64,${profilePicture}`} alt="Profile Picture" className="rounded-full w-52" />
+                                                    <span className="flex absolute h-3 w-3 top-0 right-5">
+                                                        {/* Edit button */}
+                                                        <button onClick={() => setShowModal(true)} className="text-indigo-600 hover:text-indigo-900 px-4">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                                                <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
+                                                                <path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd" />
+                                                            </svg>
+                                                        </button>
+                                                    </span>
                                                 </span>
-                                            </span>
-                                        </div>
-                                    </> : <>
+                                            </div>
+                                        </> : <>
 
-                                        <button onClick={() => setShowModal(true)} className="text-indigo-600 hover:text-indigo-900 px-4">
-                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                                <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
-                                                <path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd" />
-                                            </svg>
-                                        </button>
+                                            <button onClick={() => setShowModal(true)} className="text-indigo-600 hover:text-indigo-900 px-4">
+                                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                                    <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
+                                                    <path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd" />
+                                                </svg>
+                                            </button>
 
-                                    </>}
-                                    <hr />
-                                    <div className="text-left mt-2 grid grid-cols-2">
-                                        {/* Information about customer */}
-                                        {/* Eeach infromation should be editable */}
-                                        <div className="m-5">
-                                            <h2 className="text-indigo-300 font-mono">Personal Information</h2>
-                                            <div className="">
-                                                <form onSubmit={saveProfile("personal.first_name")}>
-                                                    <label htmlFor="">First name</label>
-                                                    <div className="flex flex-wrap">
-                                                        <input name="personal.first_name" type="text" defaultValue={`${profile.personal.first_name}`} />
-                                                        <button
-                                                            type="submit"
-                                                            className="bg-indigo-300 hover:bg-indigo-400 cursor-pointer rounded px-1">
-                                                            Save
-                                                        </button>
-                                                    </div>
-                                                </form>
+                                        </>}
+                                        <hr />
+                                        <div className="text-left mt-2 grid grid-cols-2">
+                                            {/* Information about customer */}
+                                            {/* Eeach infromation should be editable */}
+                                            <div className="m-5">
+                                                <h2 className="text-indigo-300 font-mono">Personal Information</h2>
+                                                <div className="">
+                                                    <form onSubmit={saveProfile("personal.first_name")}>
+                                                        <label htmlFor="">First name</label>
+                                                        <div className="flex flex-wrap">
+                                                            <input name="personal.first_name" type="text" defaultValue={`${profile.personal.first_name}`} />
+                                                            <button
+                                                                type="submit"
+                                                                className="bg-indigo-300 hover:bg-indigo-400 cursor-pointer rounded px-1">
+                                                                Save
+                                                            </button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <div className="mt-2">
+                                                    <form onSubmit={saveProfile("personal.last_name")}>
+                                                        <label htmlFor="">Last name</label>
+                                                        <div>
+                                                            <input name="personal.last_name" type="text" defaultValue={`${profile.personal.last_name}`} />
+                                                            <button
+                                                                type="submit"
+                                                                className="bg-indigo-300 hover:bg-indigo-400 cursor-pointer rounded px-1">
+                                                                Save
+                                                            </button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <div className="mt-2">
+                                                    <form onSubmit={saveProfile("personal.email")}>
+                                                        <label htmlFor="">Email</label>
+                                                        <div>
+                                                            <input name="personal.email" type="text" defaultValue={`${profile.personal.email}`} />
+                                                            <button
+                                                                type="submit"
+                                                                className="bg-indigo-300 hover:bg-indigo-400 cursor-pointer rounded px-1">
+                                                                Save
+                                                            </button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <div className="mt-2">
+                                                    <form onSubmit={saveProfile("personal.email")}>
+                                                        <label htmlFor="">Phone</label>
+                                                        <div>
+                                                            <input name="personal.phone" type="text" defaultValue={`${profile.personal.phone}`} />
+                                                            <button
+                                                                type="submit"
+                                                                className="bg-indigo-300 hover:bg-indigo-400 cursor-pointer rounded px-1">
+                                                                Save
+                                                            </button>
+                                                        </div>
+                                                    </form>
+                                                </div>
                                             </div>
-                                            <div className="mt-2">
-                                                <form onSubmit={saveProfile("personal.last_name")}>
-                                                    <label htmlFor="">Last name</label>
-                                                    <div>
-                                                        <input name="personal.last_name" type="text" defaultValue={`${profile.personal.last_name}`} />
-                                                        <button
-                                                            type="submit"
-                                                            className="bg-indigo-300 hover:bg-indigo-400 cursor-pointer rounded px-1">
-                                                            Save
-                                                        </button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                            <div className="mt-2">
-                                                <form onSubmit={saveProfile("personal.email")}>
-                                                    <label htmlFor="">Email</label>
-                                                    <div>
-                                                        <input name="personal.email" type="text" defaultValue={`${profile.personal.email}`} />
-                                                        <button
-                                                            type="submit"
-                                                            className="bg-indigo-300 hover:bg-indigo-400 cursor-pointer rounded px-1">
-                                                            Save
-                                                        </button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                            <div className="mt-2">
-                                                <form onSubmit={saveProfile("personal.email")}>
-                                                    <label htmlFor="">Phone</label>
-                                                    <div>
-                                                        <input name="personal.phone" type="text" defaultValue={`${profile.personal.phone}`} />
-                                                        <button
-                                                            type="submit"
-                                                            className="bg-indigo-300 hover:bg-indigo-400 cursor-pointer rounded px-1">
-                                                            Save
-                                                        </button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                        <div className="m-5">
-                                            <h2 className="text-indigo-300 font-mono">Billing Information</h2>
-                                            <div className="">
-                                                <form onSubmit={saveProfile("billing.company")}>
-                                                    <label htmlFor="">Company</label>
-                                                    <div>
-                                                        <input name="billing.company" type="text" defaultValue={`${profile.billing.company ?? ""}`} />
-                                                        <button
-                                                            type="submit"
-                                                            className="bg-indigo-300 hover:bg-indigo-400 cursor-pointer rounded px-1">
-                                                            Save
-                                                        </button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                            <div className="mt-2">
-                                                <form onSubmit={saveProfile("billing.company_vat")}>
-                                                    <label htmlFor="">VAT</label>
-                                                    <div>
-                                                        <input name="billing.company" type="text" defaultValue={`${profile.billing.company_vat ?? ""}`} />
-                                                        <button
-                                                            type="submit"
-                                                            className="bg-indigo-300 hover:bg-indigo-400 cursor-pointer rounded px-1">
-                                                            Save
-                                                        </button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                            <div className="mt-2">
-                                                <form onSubmit={saveProfile("billing.counry")}>
-                                                    <label htmlFor="">Country</label>
-                                                    <div>
-                                                        <input name="billing.company" type="text" defaultValue={`${profile.billing.country}`} />
-                                                        <button
-                                                            type="submit"
-                                                            className="bg-indigo-300 hover:bg-indigo-400 cursor-pointer rounded px-1">
-                                                            Save
-                                                        </button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                            <div className="mt-2">
-                                                <form onSubmit={saveProfile("billing.postcode")}>
-                                                    <label htmlFor="">Postcode</label>
-                                                    <div>
-                                                        <input name="billing.postcode" type="text" defaultValue={`${profile.billing.postcode}`} />
-                                                        <button
-                                                            type="submit"
-                                                            className="bg-indigo-300 hover:bg-indigo-400 cursor-pointer rounded px-1">
-                                                            Save
-                                                        </button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                            <div className="mt-2">
-                                                <form onSubmit={saveProfile("billing.state")}>
-                                                    <label htmlFor="">State</label>
-                                                    <div>
-                                                        <input name="billing.state" type="text" defaultValue={`${profile.billing.state}`} />
-                                                        <button
-                                                            type="submit"
-                                                            className="bg-indigo-300 hover:bg-indigo-400 cursor-pointer rounded px-1">
-                                                            Save
-                                                        </button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                            <div className="mt-2">
-                                                <form onSubmit={saveProfile("billing.street01")}>
-                                                    <label htmlFor="">Street</label>
-                                                    <div>
-                                                        <input name="billing.state" type="text" defaultValue={`${profile.billing.street01}`} />
-                                                        <button
-                                                            type="submit"
-                                                            className="bg-indigo-300 hover:bg-indigo-400 cursor-pointer rounded px-1">
-                                                            Save
-                                                        </button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                            <div className="mt-2">
-                                                <form onSubmit={saveProfile("currency")}>
-                                                    <label htmlFor="">Currency</label>
-                                                    <div>
-                                                        <select name="currency" id="">
-                                                            {currencyCodes.map(currency =>
-                                                            (
-                                                                (currency === profile.currency ?
-                                                                    <>
-                                                                        <option key={currency} value={currency} selected>
-                                                                            {currency}
-                                                                        </option>
-                                                                    </>
-                                                                    :
-                                                                    <>
-                                                                        <option key={currency} value={currency}>
-                                                                            {currency}
-                                                                        </option>
-                                                                    </>
-                                                                )
-                                                            ))}
-                                                        </select>
-                                                        {/* <input name="Currency" type="text" defaultValue={`${profile.currency ?? ""}`} /> */}
-                                                        <button
-                                                            type="submit"
-                                                            className="bg-indigo-300 hover:bg-indigo-400 cursor-pointer rounded px-1">
-                                                            Save
-                                                        </button>
-                                                    </div>
-                                                </form>
+                                            <div className="m-5">
+                                                <h2 className="text-indigo-300 font-mono">Billing Information</h2>
+                                                <div className="">
+                                                    <form onSubmit={saveProfile("billing.company")}>
+                                                        <label htmlFor="">Company</label>
+                                                        <div>
+                                                            <input name="billing.company" type="text" defaultValue={`${profile.billing.company ?? ""}`} />
+                                                            <button
+                                                                type="submit"
+                                                                className="bg-indigo-300 hover:bg-indigo-400 cursor-pointer rounded px-1">
+                                                                Save
+                                                            </button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <div className="mt-2">
+                                                    <form onSubmit={saveProfile("billing.company_vat")}>
+                                                        <label htmlFor="">VAT</label>
+                                                        <div>
+                                                            <input name="billing.company" type="text" defaultValue={`${profile.billing.company_vat ?? ""}`} />
+                                                            <button
+                                                                type="submit"
+                                                                className="bg-indigo-300 hover:bg-indigo-400 cursor-pointer rounded px-1">
+                                                                Save
+                                                            </button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <div className="mt-2">
+                                                    <form onSubmit={saveProfile("billing.counry")}>
+                                                        <label htmlFor="">Country</label>
+                                                        <div>
+                                                            <input name="billing.company" type="text" defaultValue={`${profile.billing.country}`} />
+                                                            <button
+                                                                type="submit"
+                                                                className="bg-indigo-300 hover:bg-indigo-400 cursor-pointer rounded px-1">
+                                                                Save
+                                                            </button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <div className="mt-2">
+                                                    <form onSubmit={saveProfile("billing.postcode")}>
+                                                        <label htmlFor="">Postcode</label>
+                                                        <div>
+                                                            <input name="billing.postcode" type="text" defaultValue={`${profile.billing.postcode}`} />
+                                                            <button
+                                                                type="submit"
+                                                                className="bg-indigo-300 hover:bg-indigo-400 cursor-pointer rounded px-1">
+                                                                Save
+                                                            </button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <div className="mt-2">
+                                                    <form onSubmit={saveProfile("billing.state")}>
+                                                        <label htmlFor="">State</label>
+                                                        <div>
+                                                            <input name="billing.state" type="text" defaultValue={`${profile.billing.state}`} />
+                                                            <button
+                                                                type="submit"
+                                                                className="bg-indigo-300 hover:bg-indigo-400 cursor-pointer rounded px-1">
+                                                                Save
+                                                            </button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <div className="mt-2">
+                                                    <form onSubmit={saveProfile("billing.street01")}>
+                                                        <label htmlFor="">Street</label>
+                                                        <div>
+                                                            <input name="billing.state" type="text" defaultValue={`${profile.billing.street01}`} />
+                                                            <button
+                                                                type="submit"
+                                                                className="bg-indigo-300 hover:bg-indigo-400 cursor-pointer rounded px-1">
+                                                                Save
+                                                            </button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <div className="mt-2">
+                                                    <form onSubmit={saveProfile("currency")}>
+                                                        <label htmlFor="">Currency</label>
+                                                        <div>
+                                                            <select name="currency" id="">
+                                                                {currencyCodes.map(currency =>
+                                                                (
+                                                                    (currency === profile.currency ?
+                                                                        <>
+                                                                            <option key={currency} value={currency} selected>
+                                                                                {currency}
+                                                                            </option>
+                                                                        </>
+                                                                        :
+                                                                        <>
+                                                                            <option key={currency} value={currency}>
+                                                                                {currency}
+                                                                            </option>
+                                                                        </>
+                                                                    )
+                                                                ))}
+                                                            </select>
+                                                            {/* <input name="Currency" type="text" defaultValue={`${profile.currency ?? ""}`} /> */}
+                                                            <button
+                                                                type="submit"
+                                                                className="bg-indigo-300 hover:bg-indigo-400 cursor-pointer rounded px-1">
+                                                                Save
+                                                            </button>
+                                                        </div>
+                                                    </form>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -324,7 +327,7 @@ export default ({
                         </div>
                     </div>
                 </div>
-            </div>
+            </Navigation>
         </>
     );
 }

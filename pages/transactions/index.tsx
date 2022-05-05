@@ -1,5 +1,7 @@
+import { ICustomer } from "@cpg/Interfaces/Customer.interface";
 import { ITransactions } from "@cpg/Interfaces/Transactions.interface"
 import Head from "next/head";
+import Navigation from "../../components/Navigation";
 import DynamicTable from "../../components/Tables/DynamicTable";
 import { IRowData } from "../../interfaces/RowData";
 import { mustAuth } from "../../lib/Auth";
@@ -9,10 +11,12 @@ export default ({
     transactions,
     count,
     pages,
+    profile
 }: {
     transactions: ITransactions[],
     count: number,
     pages: number,
+    profile: ICustomer
 }) =>
 {
     const rowData: IRowData<ITransactions>[] = [
@@ -93,11 +97,11 @@ export default ({
             printedPreview: (transactions: ITransactions) =>
             {
                 return <>
-                        <td className="text-sm font-medium text-right whitespace-nowrap">
-                            <a href={`/invoices?id=${transactions.invoice_uid}`} className='text-indigo-600 hover:text-indigo-900'>
-                                Go to invoice
-                            </a>
-                        </td>
+                    <td className="text-sm font-medium text-right whitespace-nowrap">
+                        <a href={`/invoices?id=${transactions.invoice_uid}`} className='text-indigo-600 hover:text-indigo-900'>
+                            Go to invoice
+                        </a>
+                    </td>
                 </>;
             }
         },
@@ -108,10 +112,12 @@ export default ({
             <Head>
                 <title>Transactions</title>
             </Head>
-            <div className="flex flex-wrap justify-center">
-                {/* @ts-ignore */}
-                <DynamicTable path="/transactions" count={count} pages={pages} rowData={rowData} data={transactions} />
-            </div>
+            <Navigation profile={profile}>
+                <div className="flex flex-wrap justify-center">
+                    {/* @ts-ignore */}
+                    <DynamicTable path="/transactions" count={count} pages={pages} rowData={rowData} data={transactions} />
+                </div>
+            </Navigation>
         </>
     )
 }
@@ -119,41 +125,50 @@ export default ({
 export async function getServerSideProps(context: any)
 {
     const session = await mustAuth(true, context);
-    if(!session)
+    if (!session)
         return {
             props: {}
         };
     // @ts-ignore
     const token = session?.user.email as string
-    if(!(await TokenValid(token, context)))
+    if (!(await TokenValid(token, context)))
         return {
             props: {}
         };
     let query = ``;
 
-    if(context.query)
+    if (context.query)
         query = `?sort=-id&${Object.keys(context.query).map(key => `${key}=${context.query[key]}`).join("&")}`;
 
     let count, pages;
     const transactions = await fetch(`${process.env.CPG_DOMAIN}/v2/customers/my/transactions${query}`,
-    {
+        {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            }
+        }).then(res =>
+        {
+            count = res.headers.get("X-Total");
+            pages = res.headers.get("X-Total-Pages");
+            return res.json();
+        });
+
+    const profile = await fetch(`${process.env.CPG_DOMAIN}/v2/customers/my/profile`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${token}`
         }
-    }).then(res =>
-    {
-        count = res.headers.get("X-Total");
-        pages = res.headers.get("X-Total-Pages");
-        return res.json();
-    });
+    }).then(res => res.json());
 
     return {
         props: {
             transactions,
             count,
             pages,
+            profile
         }
     }
 }

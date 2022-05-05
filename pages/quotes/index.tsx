@@ -9,6 +9,8 @@ import TokenValid from "../../lib/TokenValid";
 import { IQuotes } from "@cpg/Interfaces/Quotes.interface";
 import { Modal } from "../../components/Modal";
 import Head from "next/head";
+import Navigation from "../../components/Navigation";
+import { ICustomer } from "@cpg/Interfaces/Customer.interface";
 const { publicRuntimeConfig: config } = getConfig()
 
 export default (
@@ -16,10 +18,12 @@ export default (
         quotes,
         count,
         pages,
+        profile
     }: {
         quotes: IQuotes[] | [],
         count: number,
         pages: number,
+        profile: ICustomer
     }
 ) =>
 {
@@ -31,25 +35,25 @@ export default (
 
     const responseQuote = async (quote: IQuotes, accept: boolean) =>
     {
-        if(!session)
+        if (!session)
             return;
 
         // @ts-ignore
         const token = session.data.user.email;
-        if(!token)
+        if (!token)
             return;
 
         const res = await fetch(`${cpg_domain}/v2/quotes/${quote.id}/${accept ? "accept" : "decline"}`,
-        {
-            method: 'POST',
-            headers:
             {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            }
-        });
+                method: 'POST',
+                headers:
+                {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            });
 
-        if(res.status === 200)
+        if (res.status === 200)
         {
             const invoice = await res.json();
             // redirect to invoices
@@ -135,19 +139,19 @@ export default (
             printedPreview: (quote: IQuotes) =>
             {
                 return <>
-                        <td className="text-sm font-medium text-right whitespace-nowrap">
-                            <button onClick={() =>
-                            {
-                                popupCenter({
-                                    url: `${cpg_domain}/v2/quotes/${quote?.id}/view?access_token=${session?.data?.user?.email}`,
-                                    title: "Quote Preview",
-                                    w: 1200,
-                                    h: 1000
-                                });
-                            }} className='text-indigo-600 hover:text-indigo-900 px-4'>
-                                Preview
-                            </button>
-                        </td>
+                    <td className="text-sm font-medium text-right whitespace-nowrap">
+                        <button onClick={() =>
+                        {
+                            popupCenter({
+                                url: `${cpg_domain}/v2/quotes/${quote?.id}/view?access_token=${session?.data?.user?.email}`,
+                                title: "Quote Preview",
+                                w: 1200,
+                                h: 1000
+                            });
+                        }} className='text-indigo-600 hover:text-indigo-900 px-4'>
+                            Preview
+                        </button>
+                    </td>
                 </>;
             }
         },
@@ -165,55 +169,57 @@ export default (
                 return (
                     <>
                         {(!quote.accepted && !quote.declined) ??
-                        <>
-                            <td className="text-sm font-medium text-right whitespace-nowrap">
-                                <button onClick={() =>
-                                {
-                                    setCurrentQuote(quote);
-                                    setShowModal(true);
-                                }} className='text-indigo-600 hover:text-indigo-900'>
-                                    Decline & Accept
-                                </button>
-                            </td>
-                        </>}
+                            <>
+                                <td className="text-sm font-medium text-right whitespace-nowrap">
+                                    <button onClick={() =>
+                                    {
+                                        setCurrentQuote(quote);
+                                        setShowModal(true);
+                                    }} className='text-indigo-600 hover:text-indigo-900'>
+                                        Decline & Accept
+                                    </button>
+                                </td>
+                            </>}
                     </>
                 )
             }
         },
-    ] 
-    
+    ]
+
     return (
         <>
             <Head>
                 <title>Quotes</title>
             </Head>
-            <div className="flex flex-wrap justify-center">
-                {/* @ts-ignore */}
-                <DynamicTable count={count} pages={pages} rowData={rowData} data={quotes} />
+            <Navigation profile={profile}>
+                <div className="flex flex-wrap justify-center">
+                    {/* @ts-ignore */}
+                    <DynamicTable count={count} pages={pages} rowData={rowData} data={quotes} />
 
-                <Modal
-                    show={showModal}
-                    onClose={() => setShowModal(false)}
-                    title="Accepept & Decline Quote"
-                >
-                    Do you accept this quote?
-                    <div className="flex justify-center mt-4">
-                        <button onClick={() =>
-                        {
-                            responseQuote(currentQuote, false);
-                        }} className="bg-red-200 hover:bg-red-300 text-white font-bold py-2 px-4 rounded-full">
-                            Decline
-                        </button>
-                        <button onClick={() =>
-                        {
-                            setShowModal(false);
-                            responseQuote(currentQuote, true);
-                        }} className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-full ml-4">
-                            Accept
-                        </button>
-                    </div>
-                </Modal>                    
-            </div>
+                    <Modal
+                        show={showModal}
+                        onClose={() => setShowModal(false)}
+                        title="Accepept & Decline Quote"
+                    >
+                        Do you accept this quote?
+                        <div className="flex justify-center mt-4">
+                            <button onClick={() =>
+                            {
+                                responseQuote(currentQuote, false);
+                            }} className="bg-red-200 hover:bg-red-300 text-white font-bold py-2 px-4 rounded-full">
+                                Decline
+                            </button>
+                            <button onClick={() =>
+                            {
+                                setShowModal(false);
+                                responseQuote(currentQuote, true);
+                            }} className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-full ml-4">
+                                Accept
+                            </button>
+                        </div>
+                    </Modal>
+                </div>
+            </Navigation>
         </>
     )
 }
@@ -222,41 +228,50 @@ export default (
 export async function getServerSideProps(context)
 {
     const session = await mustAuth(true, context);
-    if(!session)
+    if (!session)
         return {
             props: {}
         };
     // @ts-ignore
     const token = session?.user.email as string
-    if(!(await TokenValid(token, context)))
+    if (!(await TokenValid(token, context)))
         return {
             props: {}
         };
     let query = ``;
 
-    if(context.query)
+    if (context.query)
         query = `?sort=-id&${Object.keys(context.query).map(key => `${key}=${context.query[key]}`).join("&")}`;
 
     let count, pages;
     const quotes = await fetch(`${process.env.CPG_DOMAIN}/v2/customers/my/quotes${query}`,
-    {
+        {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            }
+        }).then(res =>
+        {
+            count = res.headers.get("X-Total");
+            pages = res.headers.get("X-Total-Pages");
+            return res.json();
+        });
+
+    const profile = await fetch(`${process.env.CPG_DOMAIN}/v2/customers/my/profile`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${token}`
         }
-    }).then(res =>
-    {
-        count = res.headers.get("X-Total");
-        pages = res.headers.get("X-Total-Pages");
-        return res.json();
-    });
+    }).then(res => res.json());
 
     return {
         props: {
             quotes,
             count,
             pages,
+            profile
         }
     }
 }
