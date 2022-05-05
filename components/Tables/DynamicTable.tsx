@@ -23,7 +23,7 @@ export default function DynamicTable<T>(
 )
 {
 
-    if(!data)
+    if (!data)
         return (
             <>
                 <Loading />

@@ -11,14 +11,14 @@ export async function mustAuth(
     // @ts-ignore
     const token = session?.user.email
 
-    if(yes && !token)
+    if (yes && !token)
     {
         context.res.writeHead(302, { Location: "/login" });
         context.res.end();
         return session;
     }
 
-    if(token && context.resolvedUrl.includes("/login"))
+    if (token && context.resolvedUrl.includes("/login"))
     {
         context.res.writeHead(302, { Location: "/" });
         context.res.end();

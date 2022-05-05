@@ -77,7 +77,7 @@ const InvoiceTable = ({
         const option = form.searchOption.value;
         const search = form.search.value;
 
-        if(option === "dates.invoice_date&id")
+        if (option === "dates.invoice_date&id")
         {
             // parse the search, and get the invoice id and date
             // YYMMDDID

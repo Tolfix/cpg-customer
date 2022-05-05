@@ -26,7 +26,7 @@ export default NextAuth({
 
               const user = await res.json();
 
-              if(res.ok && user)
+              if (res.ok && user)
               {
                 return {
                   email: user.token
