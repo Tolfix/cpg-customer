@@ -10,9 +10,9 @@ export default async (token: string, context: any) =>
             "Authorization": `Bearer ${token}`
         }
     });
-    if(res.status !== 200)
+    if (res.status !== 200)
     {
-        if(context)
+        if (context)
         {
             // @ts-ignore
             context.res.writeHead(302, {

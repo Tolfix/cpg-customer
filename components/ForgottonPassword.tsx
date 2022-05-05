@@ -22,7 +22,7 @@ export default () =>
             })
         });
 
-        if(res.status == 200)
+        if (res.status == 200)
             return setMessage("An email has been sent to you with instructions on how to reset your password.");
         
         return setMessage("That email address is not registered.");
