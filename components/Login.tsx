@@ -1,14 +1,30 @@
 import { signIn } from "next-auth/react";
-import React, { useState } from "react";
-import {Box, Button, FormControl, FormLabel, Heading, HStack, Input, InputGroup, Text, VStack} from '@chakra-ui/react';
-import {InputRightElement} from "@chakra-ui/input";
+import React, { useEffect, useState } from "react";
+import { Box, Button, FormControl, FormLabel, Heading, HStack, Input, InputGroup, Text, VStack } from '@chakra-ui/react';
+import { InputRightElement } from "@chakra-ui/input";
+import { ICompanyData } from "../interfaces/CompanyData";
 export default () =>
 {
-
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     const [Error, setError] = useState(false);
+
+    const [company, setCompany] = useState<ICompanyData>({
+        COMPANY_LOGO: '',
+        COMPANY_NAME: '',
+    });
+
+    const getCompany = async () =>
+    {
+        const companyName = await fetch(`/api/info/company`).then(res => res.json());
+        return companyName;
+    }
+
+    useEffect(() =>
+    {
+        getCompany().then(company => setCompany(company));
+    }, [getCompany, company, setCompany]);
 
     const login = async (e: { preventDefault: () => void; target: any; }) =>
     {
@@ -24,12 +40,10 @@ export default () =>
         {
 
             console.log(msg);
-            if(msg.status === 401)
-            {
+            if (msg.status === 401)
                 setError(true);
-            }
 
-            if(msg.status === 200)
+            if (msg.status === 200)
             {
                 setError(false);
                 window.location.href = `${window.location.origin}/`;
@@ -61,51 +75,51 @@ export default () =>
                 border={['none', '1px']}
                 borderColor={['', 'gray.300']}
                 borderRadius={10}
-                >
+            >
                 <VStack spacing={4} align='flex-start' w='full'>
                     <VStack spacing={1} align={['flex-start', 'center']} w='full' mb={4}>
-                        <Heading>CPG Login</Heading>
+                        {/* TODO: Make dynamic heading */}
+                        <Heading>{company.COMPANY_NAME}</Heading>
                         <Text>Enter your e-mail and password to login.</Text>
                         <Text hidden={!Error} color={'red'}>An error has occurred. Please try again.</Text>
                     </VStack>
                 </VStack>
                 <form>
-                <FormControl mb={4} onSubmit={login}>
-                    <FormLabel>E-mail</FormLabel>
-                    <Input
-                        rounded={"md"}
-                        variant={'outline'}
-                        onChange={handleUsername}
-                        onSubmit={login}
-                        placeholder={"Enter e-mail"}
-                        isInvalid={Error}
-                    />
-                </FormControl>
-                <FormControl mb={4}>
-                    <FormLabel>Password</FormLabel>
-                    <InputGroup size="md">
+                    <FormControl mb={4} onSubmit={login}>
+                        <FormLabel>E-mail</FormLabel>
                         <Input
-                            pr="4.5rem"
-                            rounded={'md'}
+                            rounded={"md"}
                             variant={'outline'}
-                            onChange={handlePassword}
+                            onChange={handleUsername}
                             onSubmit={login}
-                            type={show ? "text" : "password"}
-                            placeholder="Enter password"
+                            placeholder={"Enter e-mail"}
                             isInvalid={Error}
-
                         />
-                        <InputRightElement width="4.5rem">
-                            <Button size="sm" onClick={handleClick}>
-                                {show ? "Hide" : "Show"}
-                            </Button>
-                        </InputRightElement>
-                    </InputGroup>
-                </FormControl>
+                    </FormControl>
+                    <FormControl mb={4}>
+                        <FormLabel>Password</FormLabel>
+                        <InputGroup size="md">
+                            <Input
+                                pr="4.5rem"
+                                rounded={'md'}
+                                variant={'outline'}
+                                onChange={handlePassword}
+                                onSubmit={login}
+                                type={show ? "text" : "password"}
+                                placeholder="Enter password"
+                                isInvalid={Error}
+
+                            />
+                            <InputRightElement width="4.5rem">
+                                <Button size="sm" onClick={handleClick}>
+                                    {show ? "Hide" : "Show"}
+                                </Button>
+                            </InputRightElement>
+                        </InputGroup>
+                    </FormControl>
                 </form>
                 <HStack w={'full'} justify={'space-between'} mb={4}>
                     <Button variant={'link'} colorScheme={'purple'}>Forgot Password?</Button>
-
                 </HStack>
                 <Button rounded={'md'} variant={"outline"} colorScheme={'purple'} w={['full']} onClick={login}>
                     Login
