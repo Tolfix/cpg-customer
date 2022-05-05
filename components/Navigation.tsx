@@ -1,5 +1,4 @@
 import React, { ReactNode, useState } from 'react';
-import { GetServerSideProps } from "next";
 import
 {
     IconButton,
@@ -39,10 +38,7 @@ import { IconType } from 'react-icons';
 import { ReactText } from 'react';
 import { FaDollarSign } from "react-icons/fa";
 import { ICustomer } from "@cpg/Interfaces/Customer.interface";
-import { mustAuth } from "../lib/Auth";
-import TokenValid from "../lib/TokenValid";
-import { Session } from "next-auth";
-import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
 
 interface LinkItemProps
 {
@@ -104,6 +100,7 @@ interface SidebarProps extends BoxProps
 
 const SidebarContent = ({ onClose, ...rest }: SidebarProps) =>
 {
+    const router = useRouter();
     return (
         <Box
             transition="3s ease"
@@ -121,7 +118,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) =>
                 <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
             </Flex>
             {LinkItems.map((link) => (
-                <NavItem url={link.url} key={link.name} icon={link.icon}>
+                <NavItem bg={router.pathname === link.url ? "cyan.200" : ''} url={link.url} key={link.name} icon={link.icon}>
                     {link.name}
                 </NavItem>
             ))}
