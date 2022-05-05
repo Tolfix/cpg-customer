@@ -39,6 +39,7 @@ import { ReactText } from 'react';
 import { FaDollarSign } from "react-icons/fa";
 import { ICustomer } from "@cpg/Interfaces/Customer.interface";
 import { useRouter } from 'next/router';
+import { signOut } from "next-auth/react";
 
 interface LinkItemProps
 {
@@ -248,7 +249,10 @@ const MobileNav = ({ onOpen, profile, ...rest }: MobileProps) =>
                             <MenuItem>Settings</MenuItem>
                             <MenuItem>Billing</MenuItem>
                             <MenuDivider />
-                            <MenuItem>Sign out</MenuItem>
+                            <MenuItem onClick={() =>
+                            {
+                                signOut();
+                            }}>Sign out</MenuItem>
                         </MenuList>
                     </Menu>
                 </Flex>
