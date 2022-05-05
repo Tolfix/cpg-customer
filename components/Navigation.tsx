@@ -1,4 +1,5 @@
-import React, {ReactNode, useEffect, useState} from 'react';
+import React, {ReactNode, useState} from 'react';
+import { GetServerSideProps } from "next";
 import {
     IconButton,
     Avatar,
@@ -35,7 +36,11 @@ import {
 import {IconType} from 'react-icons';
 import {ReactText} from 'react';
 import {FaDollarSign} from "react-icons/fa";
-import {useSession} from "next-auth/react";
+import {ICustomer} from "@cpg/Interfaces/Customer.interface";
+import {mustAuth} from "../lib/Auth";
+import TokenValid from "../lib/TokenValid";
+import {Session} from "next-auth";
+import { useSession } from 'next-auth/react';
 
 interface LinkItemProps
 {
@@ -55,8 +60,10 @@ const LinkItems: Array<LinkItemProps> = [
 
 function Navigation({
                         children,
+    profile,
                     }: {
-    children: ReactNode;
+    children: ReactNode,
+    profile: ICustomer;
 })
 {
 
@@ -80,7 +87,7 @@ function Navigation({
                 </DrawerContent>
             </Drawer>
             {/* mobilenav */}
-            <MobileNav onOpen={onOpen}/>
+            <MobileNav onOpen={onOpen} profile={profile}/>
             <Box ml={{base: 0, md: 60}} p="4">
                 {children}
             </Box>
@@ -107,7 +114,7 @@ const SidebarContent = ({onClose, ...rest}: SidebarProps) =>
             {...rest}>
             <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
                 <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
-                    Logo
+                    CPG Portal
                 </Text>
                 <CloseButton display={{base: 'flex', md: 'none'}} onClick={onClose}/>
             </Flex>
@@ -162,16 +169,17 @@ const NavItem = ({url, icon, children, ...rest}: NavItemProps) =>
 interface MobileProps extends FlexProps
 {
     onOpen: () => void;
+    profile: ICustomer;
 }
 
-const MobileNav = ({onOpen, ...rest}: MobileProps) =>
+const MobileNav = ({onOpen, profile, ...rest}: MobileProps) =>
 {
-    const { status, data } = useSession();
 
-    const [username, setUsername] = useState(data?.user?.name ?? "Set your name!");
-    const [userImg, setUserImg] = useState(data?.user?.image)
-    const [userRole, setUserRole] = useState("Customer");
+    console.log(profile);
 
+    const [username, setUsername] = useState(profile?.personal?.first_name ?? "Set your name!");
+    const [userImg, setUserImg] = useState(profile?.profile_picture ?? "")
+    const [userRole, setUserRole] = useState(profile?.personal.email ?? "")
 
 
     return (
@@ -198,7 +206,7 @@ const MobileNav = ({onOpen, ...rest}: MobileProps) =>
                 fontSize="2xl"
                 fontFamily="monospace"
                 fontWeight="bold">
-                Logo
+                CPG Portal
             </Text>
 
             <HStack spacing={{base: '0', md: '6'}}>

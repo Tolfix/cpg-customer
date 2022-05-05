@@ -5,8 +5,6 @@ import {InputRightElement} from "@chakra-ui/input";
 export default () =>
 {
 
-
-
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 

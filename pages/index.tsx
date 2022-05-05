@@ -26,7 +26,7 @@ ChartJS.register(
 );
 
 // @ts-ignore
-const Home: NextPage = () =>
+const Home: NextPage = ({profile}:ICustomer ) =>
 {
     return (
         <>
@@ -35,7 +35,7 @@ const Home: NextPage = () =>
                     <p>test
                     </p>
                 </>
-            }/>
+            } profile={profile}/>
         </>
     );
 }
@@ -55,7 +55,7 @@ export async function getServerSideProps(context: any)
             props: {}
         };
 
-    const [invoices, orders, transactions, customer] = [
+    const [invoices, orders, transactions, profile] = [
         await fetch(`${process.env.CPG_DOMAIN}/v2/customers/my/invoices?limit=100`,
         {
             method: "GET",
@@ -91,10 +91,7 @@ export async function getServerSideProps(context: any)
 
     return {
         props: {
-            invoices: invoices,
-            orders: orders,
-            transactions: transactions,
-            customer: customer
+            profile: profile,
         }
     }
 }
