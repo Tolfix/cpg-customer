@@ -13,11 +13,11 @@ export default ({
     token,
     cpg_domain
 }:
-{
-    profile: ICustomer,
-    token: string,
-    cpg_domain: string
-}) =>
+    {
+        profile: ICustomer,
+        token: string,
+        cpg_domain: string
+    }) =>
 {
     const [profilePicture, setProfilePicture] = useState<string>("");
     const [showModal, setShowModal] = useState(false);
@@ -36,16 +36,16 @@ export default ({
                 {
                     method: 'PUT',
                     headers:
-                        {
-                            "Content-Type": "application/json",
-                            'Authorization': `Bearer ${token}`
-                        },
+                    {
+                        "Content-Type": "application/json",
+                        'Authorization': `Bearer ${token}`
+                    },
                     body: JSON.stringify(data)
                 })
         }
     }
 
-    if(profile.profile_picture)
+    if (profile.profile_picture)
         fetch(`${cpg_domain}/v2/images/${profile.profile_picture}`).then(e => e.json()).then(data =>
         {
             setProfilePicture(data.data);
@@ -66,9 +66,9 @@ export default ({
             },
             body: data
         }).then(e => e.json()).then(e =>
-            {
-                setProfilePicture(e.data);
-            });
+        {
+            setProfilePicture(e.data);
+        });
     };
     // Check if profile picture, and if true set it to the profile picture
     return (
@@ -82,15 +82,15 @@ export default ({
                 title="Edit Profile Picture"
             >
                 <form onSubmit={changeProfilePicture}>
-                <div className="flex justify-center m-14 mx-10">
-                    <div className="mb-3">
-                        <label 
-                            htmlFor="profile_picture"
-                            className="form-label inline-block mb-2 text-gray-700"
-                        >
-                            Max file size: 5 GB
-                        </label>
-                        <input name="profile_picture" className="
+                    <div className="flex justify-center m-14 mx-10">
+                        <div className="mb-3">
+                            <label
+                                htmlFor="profile_picture"
+                                className="form-label inline-block mb-2 text-gray-700"
+                            >
+                                Max file size: 5 GB
+                            </label>
+                            <input name="profile_picture" className="
                                 form-control
                                 block w-full px-2 py-1.5 text-xl font-normal
                                 text-gray-700 bg-white bg-clip-padding
@@ -98,18 +98,18 @@ export default ({
                                 ease-in-out m-0
                                 focus:text-gray-700 focus:bg-white 
                                 focus:border-blue-600 focus:outline-none"
-                                id="profile_picture" 
+                                id="profile_picture"
                                 type="file"
-                                accept="image/png, image/jpg, image/jpeg" 
-                        />
-                        <button className="border border-indigo-300 p-3 rounded" type="submit">
-                            Upload
-                        </button>
+                                accept="image/png, image/jpg, image/jpeg"
+                            />
+                            <button className="border border-indigo-300 p-3 rounded" type="submit">
+                                Upload
+                            </button>
+                        </div>
                     </div>
-                </div>
                 </form>
             </Modal>
-        
+
             {/* Customer interface, possible to edit each field and save each one */}
             {/* Each as a form input which goes to POST /v2/customers/my/profile */}
             {/* Also using tailwind css to make life easier */}
@@ -138,14 +138,14 @@ export default ({
                                             </span>
                                         </div>
                                     </> : <>
-                                    
+
                                         <button onClick={() => setShowModal(true)} className="text-indigo-600 hover:text-indigo-900 px-4">
                                             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                                                 <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
                                                 <path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd" />
                                             </svg>
                                         </button>
-                                    
+
                                     </>}
                                     <hr />
                                     <div className="text-left mt-2 grid grid-cols-2">
@@ -159,7 +159,7 @@ export default ({
                                                     <div className="flex flex-wrap">
                                                         <input name="personal.first_name" type="text" defaultValue={`${profile.personal.first_name}`} />
                                                         <button
-                                                            type="submit" 
+                                                            type="submit"
                                                             className="bg-indigo-300 hover:bg-indigo-400 cursor-pointer rounded px-1">
                                                             Save
                                                         </button>
@@ -171,8 +171,8 @@ export default ({
                                                     <label htmlFor="">Last name</label>
                                                     <div>
                                                         <input name="personal.last_name" type="text" defaultValue={`${profile.personal.last_name}`} />
-                                                        <button 
-                                                            type="submit" 
+                                                        <button
+                                                            type="submit"
                                                             className="bg-indigo-300 hover:bg-indigo-400 cursor-pointer rounded px-1">
                                                             Save
                                                         </button>
@@ -184,8 +184,8 @@ export default ({
                                                     <label htmlFor="">Email</label>
                                                     <div>
                                                         <input name="personal.email" type="text" defaultValue={`${profile.personal.email}`} />
-                                                        <button 
-                                                            type="submit" 
+                                                        <button
+                                                            type="submit"
                                                             className="bg-indigo-300 hover:bg-indigo-400 cursor-pointer rounded px-1">
                                                             Save
                                                         </button>
@@ -197,8 +197,8 @@ export default ({
                                                     <label htmlFor="">Phone</label>
                                                     <div>
                                                         <input name="personal.phone" type="text" defaultValue={`${profile.personal.phone}`} />
-                                                        <button 
-                                                            type="submit" 
+                                                        <button
+                                                            type="submit"
                                                             className="bg-indigo-300 hover:bg-indigo-400 cursor-pointer rounded px-1">
                                                             Save
                                                         </button>
@@ -213,8 +213,8 @@ export default ({
                                                     <label htmlFor="">Company</label>
                                                     <div>
                                                         <input name="billing.company" type="text" defaultValue={`${profile.billing.company ?? ""}`} />
-                                                        <button 
-                                                            type="submit" 
+                                                        <button
+                                                            type="submit"
                                                             className="bg-indigo-300 hover:bg-indigo-400 cursor-pointer rounded px-1">
                                                             Save
                                                         </button>
@@ -226,8 +226,8 @@ export default ({
                                                     <label htmlFor="">VAT</label>
                                                     <div>
                                                         <input name="billing.company" type="text" defaultValue={`${profile.billing.company_vat ?? ""}`} />
-                                                        <button 
-                                                            type="submit" 
+                                                        <button
+                                                            type="submit"
                                                             className="bg-indigo-300 hover:bg-indigo-400 cursor-pointer rounded px-1">
                                                             Save
                                                         </button>
@@ -239,8 +239,8 @@ export default ({
                                                     <label htmlFor="">Country</label>
                                                     <div>
                                                         <input name="billing.company" type="text" defaultValue={`${profile.billing.country}`} />
-                                                        <button 
-                                                            type="submit" 
+                                                        <button
+                                                            type="submit"
                                                             className="bg-indigo-300 hover:bg-indigo-400 cursor-pointer rounded px-1">
                                                             Save
                                                         </button>
@@ -252,8 +252,8 @@ export default ({
                                                     <label htmlFor="">Postcode</label>
                                                     <div>
                                                         <input name="billing.postcode" type="text" defaultValue={`${profile.billing.postcode}`} />
-                                                        <button 
-                                                            type="submit" 
+                                                        <button
+                                                            type="submit"
                                                             className="bg-indigo-300 hover:bg-indigo-400 cursor-pointer rounded px-1">
                                                             Save
                                                         </button>
@@ -265,8 +265,8 @@ export default ({
                                                     <label htmlFor="">State</label>
                                                     <div>
                                                         <input name="billing.state" type="text" defaultValue={`${profile.billing.state}`} />
-                                                        <button 
-                                                            type="submit" 
+                                                        <button
+                                                            type="submit"
                                                             className="bg-indigo-300 hover:bg-indigo-400 cursor-pointer rounded px-1">
                                                             Save
                                                         </button>
@@ -278,8 +278,8 @@ export default ({
                                                     <label htmlFor="">Street</label>
                                                     <div>
                                                         <input name="billing.state" type="text" defaultValue={`${profile.billing.street01}`} />
-                                                        <button 
-                                                            type="submit" 
+                                                        <button
+                                                            type="submit"
                                                             className="bg-indigo-300 hover:bg-indigo-400 cursor-pointer rounded px-1">
                                                             Save
                                                         </button>
@@ -294,23 +294,23 @@ export default ({
                                                             {currencyCodes.map(currency =>
                                                             (
                                                                 (currency === profile.currency ?
-                                                                        <>
-                                                                            <option key={currency} value={currency} selected>
-                                                                                {currency}
-                                                                            </option>
-                                                                        </>
-                                                                        : 
-                                                                        <>
-                                                                            <option key={currency} value={currency}>
-                                                                                {currency}
-                                                                            </option>
-                                                                        </>
+                                                                    <>
+                                                                        <option key={currency} value={currency} selected>
+                                                                            {currency}
+                                                                        </option>
+                                                                    </>
+                                                                    :
+                                                                    <>
+                                                                        <option key={currency} value={currency}>
+                                                                            {currency}
+                                                                        </option>
+                                                                    </>
                                                                 )
                                                             ))}
                                                         </select>
                                                         {/* <input name="Currency" type="text" defaultValue={`${profile.currency ?? ""}`} /> */}
-                                                        <button 
-                                                            type="submit" 
+                                                        <button
+                                                            type="submit"
                                                             className="bg-indigo-300 hover:bg-indigo-400 cursor-pointer rounded px-1">
                                                             Save
                                                         </button>
@@ -332,14 +332,14 @@ export default ({
 export const getServerSideProps: GetServerSideProps = async (context) =>
 {
     const session = await mustAuth(true, context);
-    if(!session)
+    if (!session)
         return {
             props: {}
         };
 
     // @ts-ignore
     const token = session?.user.email as string
-    if(!(await TokenValid(token, context)))
+    if (!(await TokenValid(token, context)))
         return {
             props: {}
         };
@@ -349,7 +349,7 @@ export const getServerSideProps: GetServerSideProps = async (context) =>
         headers: {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${token}`
-            }
+        }
     }).then(res => res.json());
 
     return {

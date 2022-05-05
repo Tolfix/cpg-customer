@@ -1,7 +1,7 @@
 import { ICustomer } from '@cpg/Interfaces/Customer.interface';
 import type { NextPage } from 'next'
-import { Bar, } from 'react-chartjs-2';
-import {
+import
+{
     Chart as ChartJS,
     CategoryScale,
     LinearScale,
@@ -9,10 +9,7 @@ import {
     Title,
     Tooltip,
     Legend,
-  } from 'chart.js';
-import { IInvoice } from '@cpg/Interfaces/Invoice.interface';
-import { IOrder } from '@cpg/Interfaces/Orders.interface';
-import { ITransactions } from '@cpg/Interfaces/Transactions.interface';
+} from 'chart.js';
 import { mustAuth } from '../lib/Auth';
 import TokenValid from '../lib/TokenValid';
 import Navigation from "../components/Navigation";
@@ -26,7 +23,7 @@ ChartJS.register(
 );
 
 // @ts-ignore
-const Home: NextPage = ({profile}:ICustomer ) =>
+const Home: NextPage = ({ profile }: ICustomer) =>
 {
     return (
         <>
@@ -35,7 +32,7 @@ const Home: NextPage = ({profile}:ICustomer ) =>
                     <p>test
                     </p>
                 </>
-            } profile={profile}/>
+            } profile={profile} />
         </>
     );
 }
@@ -43,43 +40,19 @@ const Home: NextPage = ({profile}:ICustomer ) =>
 export async function getServerSideProps(context: any)
 {
     const session = await mustAuth(true, context);
-    if(!session)
+    if (!session)
         return {
             props: {}
         };
 
     // @ts-ignore
     const token = session?.user.email as string
-    if(!(await TokenValid(token, context)))
+    if (!(await TokenValid(token, context)))
         return {
             props: {}
         };
 
-    const [invoices, orders, transactions, profile] = [
-        await fetch(`${process.env.CPG_DOMAIN}/v2/customers/my/invoices?limit=100`,
-        {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`
-            }
-        }).then(res => res.json()),
-        await fetch(`${process.env.CPG_DOMAIN}/v2/customers/my/orders?limit=100`,
-        {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`
-            }
-        }).then(res => res.json()),
-        await fetch(`${process.env.CPG_DOMAIN}/v2/customers/my/transactions?limit=100`,
-        {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`
-            }
-        }).then(res => res.json()),
+    const [profile] = [
         await fetch(`${process.env.CPG_DOMAIN}/v2/customers/my/profile`, {
             method: "GET",
             headers: {

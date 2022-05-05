@@ -1,6 +1,7 @@
-import React, {ReactNode, useState} from 'react';
+import React, { ReactNode, useState } from 'react';
 import { GetServerSideProps } from "next";
-import {
+import
+{
     IconButton,
     Avatar,
     Box,
@@ -23,7 +24,8 @@ import {
     MenuItem,
     MenuList,
 } from '@chakra-ui/react';
-import {
+import
+{
     FiHome,
     FiTrendingUp,
     FiCompass,
@@ -33,13 +35,13 @@ import {
     FiBell,
     FiChevronDown,
 } from 'react-icons/fi';
-import {IconType} from 'react-icons';
-import {ReactText} from 'react';
-import {FaDollarSign} from "react-icons/fa";
-import {ICustomer} from "@cpg/Interfaces/Customer.interface";
-import {mustAuth} from "../lib/Auth";
+import { IconType } from 'react-icons';
+import { ReactText } from 'react';
+import { FaDollarSign } from "react-icons/fa";
+import { ICustomer } from "@cpg/Interfaces/Customer.interface";
+import { mustAuth } from "../lib/Auth";
 import TokenValid from "../lib/TokenValid";
-import {Session} from "next-auth";
+import { Session } from "next-auth";
 import { useSession } from 'next-auth/react';
 
 interface LinkItemProps
@@ -50,29 +52,29 @@ interface LinkItemProps
 }
 
 const LinkItems: Array<LinkItemProps> = [
-    {name: 'Home', icon: FiHome, url: '/'},
-    {name: 'Invoices', icon: FiTrendingUp, url: '/invoices'},
-    {name: 'Quotes', icon: FiCompass, url: '/quotes'},
-    {name: 'Orders', icon: FiStar, url: '/orders'},
-    {name: 'Transactions', icon: FaDollarSign, url: '/transactions'},
-    {name: 'Profile', icon: FiBell, url: '/profile'}
+    { name: 'Home', icon: FiHome, url: '/' },
+    { name: 'Invoices', icon: FiTrendingUp, url: '/invoices' },
+    { name: 'Quotes', icon: FiCompass, url: '/quotes' },
+    { name: 'Orders', icon: FiStar, url: '/orders' },
+    { name: 'Transactions', icon: FaDollarSign, url: '/transactions' },
+    { name: 'Profile', icon: FiBell, url: '/profile' }
 ];
 
 function Navigation({
-                        children,
+    children,
     profile,
-                    }: {
+}: {
     children: ReactNode,
     profile: ICustomer;
 })
 {
 
-    const {isOpen, onOpen, onClose} = useDisclosure();
+    const { isOpen, onOpen, onClose } = useDisclosure();
     return (
         <Box minH="100vh" bg={useColorModeValue('gray.100', 'gray.900')}>
             <SidebarContent
                 onClose={() => onClose}
-                display={{base: 'none', md: 'block'}}
+                display={{ base: 'none', md: 'block' }}
             />
             <Drawer
                 autoFocus={false}
@@ -83,12 +85,12 @@ function Navigation({
                 onOverlayClick={onClose}
                 size="full">
                 <DrawerContent>
-                    <SidebarContent onClose={onClose}/>
+                    <SidebarContent onClose={onClose} />
                 </DrawerContent>
             </Drawer>
             {/* mobilenav */}
-            <MobileNav onOpen={onOpen} profile={profile}/>
-            <Box ml={{base: 0, md: 60}} p="4">
+            <MobileNav onOpen={onOpen} profile={profile} />
+            <Box ml={{ base: 0, md: 60 }} p="4">
                 {children}
             </Box>
         </Box>
@@ -100,7 +102,7 @@ interface SidebarProps extends BoxProps
     onClose: () => void;
 }
 
-const SidebarContent = ({onClose, ...rest}: SidebarProps) =>
+const SidebarContent = ({ onClose, ...rest }: SidebarProps) =>
 {
     return (
         <Box
@@ -108,7 +110,7 @@ const SidebarContent = ({onClose, ...rest}: SidebarProps) =>
             bg={useColorModeValue('white', 'gray.900')}
             borderRight="1px"
             borderRightColor={useColorModeValue('gray.200', 'gray.700')}
-            w={{base: 'full', md: 60}}
+            w={{ base: 'full', md: 60 }}
             pos="fixed"
             h="full"
             {...rest}>
@@ -116,7 +118,7 @@ const SidebarContent = ({onClose, ...rest}: SidebarProps) =>
                 <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
                     CPG Portal
                 </Text>
-                <CloseButton display={{base: 'flex', md: 'none'}} onClick={onClose}/>
+                <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
             </Flex>
             {LinkItems.map((link) => (
                 <NavItem url={link.url} key={link.name} icon={link.icon}>
@@ -134,10 +136,10 @@ interface NavItemProps extends FlexProps
     children: ReactText;
 }
 
-const NavItem = ({url, icon, children, ...rest}: NavItemProps) =>
+const NavItem = ({ url, icon, children, ...rest }: NavItemProps) =>
 {
     return (
-        <Link href={url} style={{textDecoration: 'none'}} _focus={{boxShadow: 'none'}}>
+        <Link href={url} style={{ textDecoration: 'none' }} _focus={{ boxShadow: 'none' }}>
             <Flex
                 align="center"
                 p="4"
@@ -172,63 +174,63 @@ interface MobileProps extends FlexProps
     profile: ICustomer;
 }
 
-const MobileNav = ({onOpen, profile, ...rest}: MobileProps) =>
+const MobileNav = ({ onOpen, profile, ...rest }: MobileProps) =>
 {
 
     console.log(profile);
 
-    const [username, setUsername] = useState(profile?.personal?.first_name ?? "Set your name!");
+    const [username, setUsername] = useState(`${profile?.personal?.first_name} ${profile?.personal?.last_name}` || "Set your name!");
     const [userImg, setUserImg] = useState(profile?.profile_picture ?? "")
     const [userRole, setUserRole] = useState(profile?.personal.email ?? "")
 
 
     return (
         <Flex
-            ml={{base: 0, md: 60}}
-            px={{base: 4, md: 4}}
+            ml={{ base: 0, md: 60 }}
+            px={{ base: 4, md: 4 }}
             height="20"
             alignItems="center"
             bg={useColorModeValue('white', 'gray.900')}
             borderBottomWidth="1px"
             borderBottomColor={useColorModeValue('gray.200', 'gray.700')}
-            justifyContent={{base: 'space-between', md: 'flex-end'}}
+            justifyContent={{ base: 'space-between', md: 'flex-end' }}
             {...rest}>
             <IconButton
-                display={{base: 'flex', md: 'none'}}
+                display={{ base: 'flex', md: 'none' }}
                 onClick={onOpen}
                 variant="outline"
                 aria-label="open menu"
-                icon={<FiMenu/>}
+                icon={<FiMenu />}
             />
 
             <Text
-                display={{base: 'flex', md: 'none'}}
+                display={{ base: 'flex', md: 'none' }}
                 fontSize="2xl"
                 fontFamily="monospace"
                 fontWeight="bold">
                 CPG Portal
             </Text>
 
-            <HStack spacing={{base: '0', md: '6'}}>
+            <HStack spacing={{ base: '0', md: '6' }}>
                 <IconButton
                     size="lg"
                     variant="ghost"
                     aria-label="open menu"
-                    icon={<FiBell/>}
+                    icon={<FiBell />}
                 />
                 <Flex alignItems={'center'}>
                     <Menu>
                         <MenuButton
                             py={2}
                             transition="all 0.3s"
-                            _focus={{boxShadow: 'none'}}>
+                            _focus={{ boxShadow: 'none' }}>
                             <HStack>
                                 <Avatar
                                     size={'sm'}
                                     src={userImg ?? "Loading..."}
                                 />
                                 <VStack
-                                    display={{base: 'none', md: 'flex'}}
+                                    display={{ base: 'none', md: 'flex' }}
                                     alignItems="flex-start"
                                     spacing="1px"
                                     ml="2">
@@ -237,8 +239,8 @@ const MobileNav = ({onOpen, profile, ...rest}: MobileProps) =>
                                         {userRole ?? "Loading..."}
                                     </Text>
                                 </VStack>
-                                <Box display={{base: 'none', md: 'flex'}}>
-                                    <FiChevronDown/>
+                                <Box display={{ base: 'none', md: 'flex' }}>
+                                    <FiChevronDown />
                                 </Box>
                             </HStack>
                         </MenuButton>
@@ -248,7 +250,7 @@ const MobileNav = ({onOpen, profile, ...rest}: MobileProps) =>
                             <MenuItem>Profile</MenuItem>
                             <MenuItem>Settings</MenuItem>
                             <MenuItem>Billing</MenuItem>
-                            <MenuDivider/>
+                            <MenuDivider />
                             <MenuItem>Sign out</MenuItem>
                         </MenuList>
                     </Menu>
