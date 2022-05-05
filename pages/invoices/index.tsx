@@ -8,6 +8,8 @@ import getConfig from 'next/config'
 import { mustAuth } from "../../lib/Auth";
 import TokenValid from "../../lib/TokenValid";
 import Head from "next/head";
+import Navigation from "../../components/Navigation";
+import { ICustomer } from "@cpg/Interfaces/Customer.interface";
 const { publicRuntimeConfig: config } = getConfig()
 
 export default (
@@ -15,10 +17,12 @@ export default (
         invoices,
         count,
         pages,
+        profile
     }: {
         invoices: IInvoice[] | [],
         count: number,
         pages: number,
+        profile: ICustomer;
     }
 ) =>
 {
@@ -52,8 +56,8 @@ export default (
             },
             printedPreview: (invoice: IInvoice) =>
             {
-                let date = (invoice.dates?.invoice_date as string)?.replaceAll("-","");
-                if(!date)
+                let date = (invoice.dates?.invoice_date as string)?.replaceAll("-", "");
+                if (!date)
                     date = "N/A";
                 return `${date}${invoice?.id}`;
             }
@@ -81,7 +85,7 @@ export default (
             },
             printedPreview: (invoice: IInvoice) =>
             {
-                return `${ (invoice.amount + ((invoice.amount / 100) * invoice.tax_rate)).toFixed(2).toString()} ${invoice.currency}`;
+                return `${(invoice.amount + ((invoice.amount / 100) * invoice.tax_rate)).toFixed(2).toString()} ${invoice.currency}`;
             }
         },
         {
@@ -160,17 +164,19 @@ export default (
             <Head>
                 <title>Invoices</title>
             </Head>
-            <div className="flex flex-wrap justify-center">
-                {/* <InvoicesTable invoice={invoices} /> */}
-                {/* @ts-ignore */}
-                <DynamicTable count={count} pages={pages} path="/invoices" data={invoices} rowData={rowData} />
+            <Navigation profile={profile}>
+                <div className="flex flex-wrap justify-center">
+                    {/* <InvoicesTable invoice={invoices} /> */}
+                    {/* @ts-ignore */}
+                    <DynamicTable count={count} pages={pages} path="/invoices" data={invoices} rowData={rowData} />
 
-                {invoices.length > 0 ? <InvoiceModal
-                    invoice={currentInvoice}
-                    setShow={setShowModal}
-                    show={showModal}
-                /> : null}
-            </div>
+                    {invoices.length > 0 ? <InvoiceModal
+                        invoice={currentInvoice}
+                        setShow={setShowModal}
+                        show={showModal}
+                    /> : null}
+                </div>
+            </Navigation>
         </>
     )
 }
@@ -179,41 +185,51 @@ export default (
 export async function getServerSideProps(context)
 {
     const session = await mustAuth(true, context);
-    if(!session)
+    if (!session)
         return {
             props: {}
         };
     // @ts-ignore
     const token = session?.user.email as string
-    if(!(await TokenValid(token, context)))
+    if (!(await TokenValid(token, context)))
         return {
             props: {}
         };
     let query = ``;
 
-    if(context.query)
+    if (context.query)
         query = `?sort=-id&${Object.keys(context.query).map(key => `${key}=${context.query[key]}`).join("&")}`;
 
     let count, pages;
     const invoices = await fetch(`${process.env.CPG_DOMAIN}/v2/customers/my/invoices${query}`,
-    {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`
-        }
-    }).then(res =>
-    {
-        count = res.headers.get("X-Total");
-        pages = res.headers.get("X-Total-Pages");
-        return res.json();
-    });
+        {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            }
+        }).then(res =>
+        {
+            count = res.headers.get("X-Total");
+            pages = res.headers.get("X-Total-Pages");
+            return res.json();
+        });
+
+    const profile = await (await fetch(`${process.env.CPG_DOMAIN}/v2/customers/my/profile`,
+        {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            }
+        })).json();
 
     return {
         props: {
             invoices,
             count,
             pages,
+            profile
         }
     }
 }
