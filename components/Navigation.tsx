@@ -178,7 +178,7 @@ const MobileNav = ({ onOpen, profile, ...rest }: MobileProps) =>
 {
 
     const [username, setUsername] = useState(`${profile?.personal?.first_name} ${profile?.personal?.last_name}` || "Set your name!");
-    const [userImg, setUserImg] = useState(profile?.profile_picture ?? "")
+    const [userImg, setUserImg] = useState<null | string>(null)
     const [userRole, setUserRole] = useState(profile?.personal.email ?? "")
 
     const [company, setCompany] = useState<ICompanyData>({

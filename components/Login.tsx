@@ -34,8 +34,6 @@ export default () =>
             }
         ).then((msg: any) => 
         {
-
-            console.log(msg);
             if (msg.status === 401)
                 setError(true);
 
