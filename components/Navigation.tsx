@@ -179,7 +179,7 @@ const MobileNav = ({ onOpen, profile, ...rest }: MobileProps) =>
 
     const [username, setUsername] = useState(`${profile?.personal?.first_name} ${profile?.personal?.last_name}` || "Set your name!");
     const [userImg, setUserImg] = useState<null | string>(null)
-    const [userRole, setUserRole] = useState(profile?.personal.email ?? "")
+    const [userEmail, setUserEmail] = useState(profile?.personal.email ?? "")
 
     const [company, setCompany] = useState<ICompanyData>({
         COMPANY_LOGO: '',
@@ -258,7 +258,7 @@ const MobileNav = ({ onOpen, profile, ...rest }: MobileProps) =>
                                     ml="2">
                                     <Text fontSize="sm">{username ?? "Loading..."}</Text>
                                     <Text fontSize="xs" color="gray.600">
-                                        {userRole ?? "Loading..."}
+                                        {userEmail ?? "Loading..."}
                                     </Text>
                                 </VStack>
                                 <Box display={{ base: 'none', md: 'flex' }}>
