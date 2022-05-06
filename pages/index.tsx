@@ -13,6 +13,7 @@ import
 import { mustAuth } from '../lib/Auth';
 import TokenValid from '../lib/TokenValid';
 import Navigation from "../components/Navigation";
+import { ICompanyData } from '../interfaces/CompanyData';
 ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -23,7 +24,10 @@ ChartJS.register(
 );
 
 // @ts-ignore
-const Home: NextPage = ({ profile }: ICustomer) =>
+const Home: NextPage = ({ profile, company }: {
+    profile: ICustomer;
+    company: ICompanyData;
+}) =>
 {
     return (
         <>
@@ -32,7 +36,7 @@ const Home: NextPage = ({ profile }: ICustomer) =>
                     <p>test
                     </p>
                 </>
-            } profile={profile} />
+            } profile={profile} company={company} />
         </>
     );
 }

@@ -10,6 +10,7 @@ import TokenValid from "../../lib/TokenValid";
 import Head from "next/head";
 import Navigation from "../../components/Navigation";
 import { ICustomer } from "@cpg/Interfaces/Customer.interface";
+import { ICompanyData } from "../../interfaces/CompanyData";
 const { publicRuntimeConfig: config } = getConfig()
 
 export default (
@@ -17,12 +18,14 @@ export default (
         invoices,
         count,
         pages,
-        profile
+        profile,
+        company
     }: {
         invoices: IInvoice[] | [],
         count: number,
         pages: number,
         profile: ICustomer;
+        company: ICompanyData;
     }
 ) =>
 {
@@ -164,7 +167,7 @@ export default (
             <Head>
                 <title>Invoices</title>
             </Head>
-            <Navigation profile={profile}>
+            <Navigation profile={profile} company={company}>
                 <div className="flex flex-wrap justify-center">
                     {/* <InvoicesTable invoice={invoices} /> */}
                     {/* @ts-ignore */}

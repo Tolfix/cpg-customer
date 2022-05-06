@@ -10,6 +10,7 @@ import TokenValid from "../../lib/TokenValid";
 import Head from "next/head";
 import { ICustomer } from "@cpg/Interfaces/Customer.interface";
 import Navigation from "../../components/Navigation";
+import { ICompanyData } from "../../interfaces/CompanyData";
 const { publicRuntimeConfig: config } = getConfig()
 
 export async function CancelOrder(orderId: IOrder["id"])
@@ -40,12 +41,14 @@ export default (
         orders,
         count,
         pages,
-        profile
+        profile,
+        company
     }: {
         orders: IOrder[],
         count: number,
         pages: number,
-        profile: ICustomer
+        profile: ICustomer,
+        company: ICompanyData
     }
 ) =>
 {
@@ -131,7 +134,7 @@ export default (
             <Head>
                 <title>Orders</title>
             </Head>
-            <Navigation profile={profile}>
+            <Navigation profile={profile} company={company}>
                 <div className="flex flex-wrap justify-center">
                     <OrderTable count={count} pages={pages} orders={orders} rowData={rowDataOrder} />
                     <Modal

@@ -3,6 +3,7 @@ import { ITransactions } from "@cpg/Interfaces/Transactions.interface"
 import Head from "next/head";
 import Navigation from "../../components/Navigation";
 import DynamicTable from "../../components/Tables/DynamicTable";
+import { ICompanyData } from "../../interfaces/CompanyData";
 import { IRowData } from "../../interfaces/RowData";
 import { mustAuth } from "../../lib/Auth";
 import TokenValid from "../../lib/TokenValid";
@@ -11,12 +12,14 @@ export default ({
     transactions,
     count,
     pages,
-    profile
+    profile,
+    company
 }: {
     transactions: ITransactions[],
     count: number,
     pages: number,
     profile: ICustomer
+    company: ICompanyData
 }) =>
 {
     const rowData: IRowData<ITransactions>[] = [
@@ -112,7 +115,7 @@ export default ({
             <Head>
                 <title>Transactions</title>
             </Head>
-            <Navigation profile={profile}>
+            <Navigation profile={profile} company={company}>
                 <div className="flex flex-wrap justify-center">
                     {/* @ts-ignore */}
                     <DynamicTable path="/transactions" count={count} pages={pages} rowData={rowData} data={transactions} />
