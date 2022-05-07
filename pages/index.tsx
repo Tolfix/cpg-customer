@@ -13,7 +13,7 @@ import
 import { mustAuth } from '../lib/Auth';
 import TokenValid from '../lib/TokenValid';
 import Navigation from "../components/Navigation";
-import {Box, SkeletonCircle, SkeletonText} from "@chakra-ui/react";
+import { ICompanyData } from '../interfaces/CompanyData';
 ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -24,18 +24,19 @@ ChartJS.register(
 );
 
 // @ts-ignore
-const Home: NextPage = ({ profile }: ICustomer) =>
+const Home: NextPage = ({ profile, company }: {
+    profile: ICustomer;
+    company: ICompanyData;
+}) =>
 {
     return (
         <>
             <Navigation children={
                 <>
-                    <Box padding='6' boxShadow='lg' bg='white'>
-                        <SkeletonCircle size='10' />
-                        <SkeletonText mt='4' noOfLines={10} spacing='4' />
-                    </Box>
+                    <p>test
+                    </p>
                 </>
-            } profile={profile} />
+            } profile={profile} company={company} />
         </>
     );
 }

@@ -62,12 +62,13 @@ const LinkItems: Array<LinkItemProps> = [
 function Navigation({
     children,
     profile,
+    company
 }: {
     children: ReactNode,
     profile: ICustomer;
+    company: ICompanyData;
 })
 {
-
     const { isOpen, onOpen, onClose } = useDisclosure();
     return (
         <Box minH="100vh" bg={useColorModeValue('gray.100', 'gray.900')}>
@@ -88,7 +89,7 @@ function Navigation({
                 </DrawerContent>
             </Drawer>
             {/* mobilenav */}
-            <MobileNav onOpen={onOpen} profile={profile} />
+            <MobileNav onOpen={onOpen} company={company} profile={profile} />
             <Box ml={{ base: 0, md: 60 }} p="4">
                 {children}
             </Box>
@@ -172,26 +173,15 @@ interface MobileProps extends FlexProps
 {
     onOpen: () => void;
     profile: ICustomer;
+    company: ICompanyData;
 }
 
-const MobileNav = ({ onOpen, profile, ...rest }: MobileProps) =>
+const MobileNav = ({ onOpen, profile, company, ...rest }: MobileProps) =>
 {
 
     const [username, setUsername] = useState(`${profile?.personal?.first_name} ${profile?.personal?.last_name}` || "Set your name!");
-    const [userImg, setUserImg] = useState(profile?.profile_picture ?? "")
-    const [userRole, setUserRole] = useState(profile?.personal.email ?? "")
-
-
-    const [company, setCompany] = useState<ICompanyData>({
-        COMPANY_LOGO: '',
-        COMPANY_NAME: '',
-        CPG_DOMAIN: '',
-    });
-
-    useEffect(() =>
-    {
-        getCompanyData().then(company => setCompany(company));
-    }, [setCompany]);
+    const [userImg, setUserImg] = useState<null | string>(null)
+    const [userEmail, setUserEmail] = useState(profile?.personal.email ?? "")
 
     const fetchProfilePicture = async () =>
     {
@@ -205,7 +195,7 @@ const MobileNav = ({ onOpen, profile, ...rest }: MobileProps) =>
     useEffect(() =>
     {
         fetchProfilePicture().then(setUserImg);
-    }, [setUserImg, company])
+    }, [setUserImg])
 
     return (
         <Flex
@@ -259,7 +249,7 @@ const MobileNav = ({ onOpen, profile, ...rest }: MobileProps) =>
                                     ml="2">
                                     <Text fontSize="sm">{username ?? "Loading..."}</Text>
                                     <Text fontSize="xs" color="gray.600">
-                                        {userRole ?? "Loading..."}
+                                        {userEmail ?? "Loading..."}
                                     </Text>
                                 </VStack>
                                 <Box display={{ base: 'none', md: 'flex' }}>
