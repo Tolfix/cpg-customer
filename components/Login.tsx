@@ -88,6 +88,7 @@ export default () =>
                             variant={'outline'}
                             onChange={handleUsername}
                             onSubmit={login}
+                            autoComplete="email"
                             placeholder={"Enter e-mail"}
                             isInvalid={Error}
                         />
@@ -101,6 +102,7 @@ export default () =>
                                 variant={'outline'}
                                 onChange={handlePassword}
                                 onSubmit={login}
+                                autoComplete="current-password"
                                 type={show ? "text" : "password"}
                                 placeholder="Enter password"
                                 isInvalid={Error}

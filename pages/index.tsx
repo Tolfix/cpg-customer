@@ -13,6 +13,7 @@ import
 import { mustAuth } from '../lib/Auth';
 import TokenValid from '../lib/TokenValid';
 import Navigation from "../components/Navigation";
+import {Box, SkeletonCircle, SkeletonText} from "@chakra-ui/react";
 ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -29,8 +30,10 @@ const Home: NextPage = ({ profile }: ICustomer) =>
         <>
             <Navigation children={
                 <>
-                    <p>test
-                    </p>
+                    <Box padding='6' boxShadow='lg' bg='white'>
+                        <SkeletonCircle size='10' />
+                        <SkeletonText mt='4' noOfLines={10} spacing='4' />
+                    </Box>
                 </>
             } profile={profile} />
         </>
